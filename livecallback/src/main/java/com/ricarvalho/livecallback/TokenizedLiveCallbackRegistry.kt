@@ -10,7 +10,9 @@ value class TokenizedLiveCallbackRegistry<I, O> private constructor (
 
     fun register(lifecycle: Lifecycle, callback: (I) -> O) =
         CallbackToken(callback).also { token ->
-            val container = registry.getOrPut(token) { LiveCallbackContainer() }
+            val container = registry.getOrPut(token) {
+                LiveCallbackContainer(whenAllBeDestroyed = { registry.remove(token) })
+            }
             container.register(lifecycle, callback)
         }
 

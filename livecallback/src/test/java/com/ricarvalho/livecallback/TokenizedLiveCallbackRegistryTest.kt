@@ -201,7 +201,7 @@ class TokenizedLiveCallbackRegistryTest {
         lifecycle.state = DESTROYED
         val receivedValues = callbacks.invoke(token, "")
 
-        assert(receivedValues?.isEmpty() == true)
+        assertNull(receivedValues)
     }
 
     @Test
