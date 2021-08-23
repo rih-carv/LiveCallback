@@ -23,6 +23,45 @@ class TokenizedLiveCallbackRegistryTest {
     }
 
     @Test
+    fun `runs while stopped`() {
+        var wasCalled = false
+
+        val token = callbacks.register(TestLifecycle(CREATED), true) {
+            wasCalled = true
+            ""
+        }
+        callbacks.invoke(token, "")
+
+        assert(wasCalled)
+    }
+
+    @Test
+    fun `doesn't runs while stopped`() {
+        var wasNotCalled = true
+
+        val token = callbacks.register(TestLifecycle(CREATED)) {
+            wasNotCalled = false
+            ""
+        }
+        callbacks.invoke(token, "")
+
+        assert(wasNotCalled)
+    }
+
+    @Test
+    fun `doesn't runs when lifecycle is destroyed`() {
+        var wasNotCalled = true
+
+        val token = callbacks.register(TestLifecycle(DESTROYED)) {
+            wasNotCalled = false
+            ""
+        }
+        callbacks.invoke(token, "")
+
+        assert(wasNotCalled)
+    }
+
+    @Test
     fun `doesn't runs after lifecycle is destroyed`() {
         var timesCalled = 0
         val lifecycle = TestLifecycle(STARTED)
@@ -135,8 +174,8 @@ class TokenizedLiveCallbackRegistryTest {
             ""
         }
 
-        val token = callbacks.register(TestLifecycle(STARTED), callback)
-        callbacks.register(TestLifecycle(STARTED), callback)
+        val token = callbacks.register(TestLifecycle(STARTED), callback = callback)
+        callbacks.register(TestLifecycle(STARTED), callback = callback)
 
         val input = "input,"
         callbacks.invoke(token, input)
@@ -176,7 +215,7 @@ class TokenizedLiveCallbackRegistryTest {
         val token = callbacks.register(TestLifecycle(STARTED)) { output }
         val receivedValues = callbacks.invoke(token, "")
 
-        assertEquals(output, receivedValues?.single())
+        assertEquals(output, receivedValues.single())
     }
 
     @Test
@@ -188,7 +227,7 @@ class TokenizedLiveCallbackRegistryTest {
         lifecycle.state = DESTROYED
         val receivedValues = callbacks.invoke(token, "")
 
-        assertEquals(null, receivedValues?.single())
+        assert(receivedValues.isEmpty())
     }
 
     @Test
@@ -196,12 +235,12 @@ class TokenizedLiveCallbackRegistryTest {
         val output = "output"
         val callback: (String) -> String = { output }
 
-        val token = callbacks.register(TestLifecycle(STARTED), callback)
-        callbacks.register(TestLifecycle(STARTED), callback)
+        val token = callbacks.register(TestLifecycle(STARTED), callback = callback)
+        callbacks.register(TestLifecycle(STARTED), callback = callback)
         val receivedValues = callbacks.invoke(token, "")
 
-        assertEquals(2, receivedValues?.size)
-        assert(receivedValues?.all { it == output } == true)
+        assertEquals(2, receivedValues.size)
+        assert(receivedValues.all { it == output })
     }
 
     @Test
@@ -210,13 +249,13 @@ class TokenizedLiveCallbackRegistryTest {
         val output2 = "output2"
         fun callback(output: String): (String) -> String = { output }
 
-        val token = callbacks.register(TestLifecycle(STARTED), callback(output1))
-        callbacks.register(TestLifecycle(STARTED), callback(output2))
+        val token = callbacks.register(TestLifecycle(STARTED), callback = callback(output1))
+        callbacks.register(TestLifecycle(STARTED), callback = callback(output2))
         val receivedValues = callbacks.invoke(token, "")
 
-        assertEquals(2, receivedValues?.size)
-        assertEquals(output1, receivedValues?.firstOrNull())
-        assertEquals(output2, receivedValues?.lastOrNull())
+        assertEquals(2, receivedValues.size)
+        assertEquals(output1, receivedValues.firstOrNull())
+        assertEquals(output2, receivedValues.lastOrNull())
     }
 
     @Test
@@ -229,8 +268,24 @@ class TokenizedLiveCallbackRegistryTest {
         val receivedValues1 = callbacks.invoke(token1, "")
         val receivedValues2 = callbacks.invoke(token2, "")
 
-        assertEquals(output1, receivedValues1?.single())
-        assertEquals(output2, receivedValues2?.single())
+        assertEquals(output1, receivedValues1.single())
+        assertEquals(output2, receivedValues2.single())
+    }
+
+    @Test
+    fun `callback output after some destroyed`() {
+        val output1 = "output1"
+        val output2 = "output2"
+        val lifecycle1 = TestLifecycle(STARTED)
+        val lifecycle2 = TestLifecycle(STARTED)
+        fun callback(output: String): (String) -> String = { output }
+
+        val token = callbacks.register(lifecycle1, callback = callback(output1))
+        callbacks.register(lifecycle2, callback = callback(output2))
+        lifecycle1.state = DESTROYED
+        val receivedValues = callbacks.invoke(token, "")
+
+        assertEquals(output2, receivedValues.single())
     }
     //endregion
 }
