@@ -23,6 +23,19 @@ class TokenizedLiveCallbackRegistryTest {
     }
 
     @Test
+    fun `doesn't runs when lifecycle is destroyed`() {
+        var wasNotCalled = true
+
+        val token = callbacks.register(TestLifecycle(DESTROYED)) {
+            wasNotCalled = false
+            ""
+        }
+        callbacks.invoke(token, "")
+
+        assert(wasNotCalled)
+    }
+
+    @Test
     fun `doesn't runs after lifecycle is destroyed`() {
         var timesCalled = 0
         val lifecycle = TestLifecycle(STARTED)

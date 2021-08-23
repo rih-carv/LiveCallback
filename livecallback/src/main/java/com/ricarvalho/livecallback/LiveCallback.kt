@@ -9,7 +9,8 @@ class LiveCallback<I, O>(
     private var callback: ((I) -> O)?
 ) : DefaultLifecycleObserver {
     init {
-        lifecycle.addObserver(this)
+        if (lifecycle.currentState == Lifecycle.State.DESTROYED) callback = null
+        else lifecycle.addObserver(this)
     }
 
     fun invoke(input: I) = callback?.invoke(input)
