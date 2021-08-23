@@ -102,4 +102,37 @@ class CallbackTokenTest {
         assertEquals(token1, token2)
     }
     //endregion
+
+    //region SimpleCallbackToken
+    @Test
+    fun `simple tokens of different callbacks shouldn't be equal`() {
+        val token1 = CallbackToken.simple {}
+        val token2 = CallbackToken.simple {}
+
+        assertNotEquals(token1, token2)
+    }
+
+    @Test
+    fun `simple tokens of the same callback should be equal`() {
+        val callback: () -> Unit = {}
+        val token1 = CallbackToken.simple(callback)
+        val token2 = CallbackToken.simple(callback)
+
+        assertEquals(token1, token2)
+    }
+
+    @Test
+    fun `simple tokens of different callback instances with the same origin should be equal`() {
+        val externalValueToForceNewLambdaInstance = ""
+        fun callback(): () -> Unit = { externalValueToForceNewLambdaInstance.run {} }
+
+        val callback1 = callback()
+        val callback2 = callback()
+        val token1 = CallbackToken.simple(callback1)
+        val token2 = CallbackToken.simple(callback2)
+
+        assertNotSame(callback1, callback2)
+        assertEquals(token1, token2)
+    }
+    //endregion
 }
