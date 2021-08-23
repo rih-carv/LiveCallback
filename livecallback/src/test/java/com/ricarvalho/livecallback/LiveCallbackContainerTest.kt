@@ -23,6 +23,32 @@ class LiveCallbackContainerTest {
     }
 
     @Test
+    fun `runs while stopped`() {
+        var wasCalled = false
+
+        callbacks.register(TestLifecycle(CREATED), true) {
+            wasCalled = true
+            ""
+        }
+        callbacks.invoke("")
+
+        assert(wasCalled)
+    }
+
+    @Test
+    fun `doesn't runs while stopped`() {
+        var wasNotCalled = true
+
+        callbacks.register(TestLifecycle(CREATED)) {
+            wasNotCalled = false
+            ""
+        }
+        callbacks.invoke("")
+
+        assert(wasNotCalled)
+    }
+
+    @Test
     fun `doesn't runs when lifecycle is destroyed`() {
         var wasNotCalled = true
 
@@ -153,8 +179,8 @@ class LiveCallbackContainerTest {
             ""
         }
 
-        callbacks.register(TestLifecycle(STARTED), callback)
-        callbacks.register(TestLifecycle(STARTED), callback)
+        callbacks.register(TestLifecycle(STARTED), callback = callback)
+        callbacks.register(TestLifecycle(STARTED), callback = callback)
 
         val input = "input,"
         callbacks.invoke(input)
@@ -212,8 +238,8 @@ class LiveCallbackContainerTest {
         val output = "output"
         val callback: (String) -> String = { output }
 
-        callbacks.register(TestLifecycle(STARTED), callback)
-        callbacks.register(TestLifecycle(STARTED), callback)
+        callbacks.register(TestLifecycle(STARTED), callback = callback)
+        callbacks.register(TestLifecycle(STARTED), callback = callback)
         val receivedValues = callbacks.invoke("")
 
         assertEquals(2, receivedValues.size)
@@ -226,8 +252,8 @@ class LiveCallbackContainerTest {
         val output2 = "output2"
         fun callback(output: String): (String) -> String = { output }
 
-        callbacks.register(TestLifecycle(STARTED), callback(output1))
-        callbacks.register(TestLifecycle(STARTED), callback(output2))
+        callbacks.register(TestLifecycle(STARTED), callback = callback(output1))
+        callbacks.register(TestLifecycle(STARTED), callback = callback(output2))
         val receivedValues = callbacks.invoke("")
 
         assertEquals(2, receivedValues.size)

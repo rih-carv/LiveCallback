@@ -3,11 +3,13 @@ package com.ricarvalho.livecallback
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Lifecycle.State.DESTROYED
+import androidx.lifecycle.Lifecycle.State.STARTED
 import androidx.lifecycle.LifecycleOwner
 
 class LiveCallback<I, O>(
     lifecycle: Lifecycle,
     callback: (I) -> O,
+    private val runWhileStopped: Boolean = false,
     private val whenDestroyed: ((LiveCallback<I, O>) -> Unit)? = null
 ) : DefaultLifecycleObserver {
     private var lifecycle: Lifecycle? = lifecycle
@@ -18,7 +20,9 @@ class LiveCallback<I, O>(
         else lifecycle.addObserver(this)
     }
 
-    fun invoke(input: I) = callback?.invoke(input)
+    fun invoke(input: I) = callback.takeIf {
+        runWhileStopped || lifecycle?.currentState?.isAtLeast(STARTED) == true
+    }?.invoke(input)
 
     override fun onDestroy(owner: LifecycleOwner) {
         super.onDestroy(owner)

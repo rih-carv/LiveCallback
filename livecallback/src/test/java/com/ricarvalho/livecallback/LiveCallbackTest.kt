@@ -20,6 +20,32 @@ class LiveCallbackTest {
     }
 
     @Test
+    fun `callback should be invoked when lifecycle is stopped`() {
+        var wasCalled = false
+
+        val liveCallback = LiveCallback<String, String>(TestLifecycle(CREATED), {
+            wasCalled = true
+            it
+        }, true)
+        liveCallback.invoke("")
+
+        assert(wasCalled)
+    }
+
+    @Test
+    fun `callback shouldn't be invoked when lifecycle is stopped`() {
+        var wasNotCalled = true
+
+        val liveCallback = LiveCallback<String, String>(TestLifecycle(CREATED), {
+            wasNotCalled = false
+            it
+        })
+        liveCallback.invoke("")
+
+        assert(wasNotCalled)
+    }
+
+    @Test
     fun `callback shouldn't be invoked when lifecycle is destroyed`() {
         var wasNotCalled = true
 

@@ -23,6 +23,32 @@ class TokenizedLiveCallbackRegistryTest {
     }
 
     @Test
+    fun `runs while stopped`() {
+        var wasCalled = false
+
+        val token = callbacks.register(TestLifecycle(CREATED), true) {
+            wasCalled = true
+            ""
+        }
+        callbacks.invoke(token, "")
+
+        assert(wasCalled)
+    }
+
+    @Test
+    fun `doesn't runs while stopped`() {
+        var wasNotCalled = true
+
+        val token = callbacks.register(TestLifecycle(CREATED)) {
+            wasNotCalled = false
+            ""
+        }
+        callbacks.invoke(token, "")
+
+        assert(wasNotCalled)
+    }
+
+    @Test
     fun `doesn't runs when lifecycle is destroyed`() {
         var wasNotCalled = true
 
@@ -148,8 +174,8 @@ class TokenizedLiveCallbackRegistryTest {
             ""
         }
 
-        val token = callbacks.register(TestLifecycle(STARTED), callback)
-        callbacks.register(TestLifecycle(STARTED), callback)
+        val token = callbacks.register(TestLifecycle(STARTED), callback = callback)
+        callbacks.register(TestLifecycle(STARTED), callback = callback)
 
         val input = "input,"
         callbacks.invoke(token, input)
@@ -209,8 +235,8 @@ class TokenizedLiveCallbackRegistryTest {
         val output = "output"
         val callback: (String) -> String = { output }
 
-        val token = callbacks.register(TestLifecycle(STARTED), callback)
-        callbacks.register(TestLifecycle(STARTED), callback)
+        val token = callbacks.register(TestLifecycle(STARTED), callback = callback)
+        callbacks.register(TestLifecycle(STARTED), callback = callback)
         val receivedValues = callbacks.invoke(token, "")
 
         assertEquals(2, receivedValues.size)
@@ -223,8 +249,8 @@ class TokenizedLiveCallbackRegistryTest {
         val output2 = "output2"
         fun callback(output: String): (String) -> String = { output }
 
-        val token = callbacks.register(TestLifecycle(STARTED), callback(output1))
-        callbacks.register(TestLifecycle(STARTED), callback(output2))
+        val token = callbacks.register(TestLifecycle(STARTED), callback = callback(output1))
+        callbacks.register(TestLifecycle(STARTED), callback = callback(output2))
         val receivedValues = callbacks.invoke(token, "")
 
         assertEquals(2, receivedValues.size)
@@ -254,8 +280,8 @@ class TokenizedLiveCallbackRegistryTest {
         val lifecycle2 = TestLifecycle(STARTED)
         fun callback(output: String): (String) -> String = { output }
 
-        val token = callbacks.register(lifecycle1, callback(output1))
-        callbacks.register(lifecycle2, callback(output2))
+        val token = callbacks.register(lifecycle1, callback = callback(output1))
+        callbacks.register(lifecycle2, callback = callback(output2))
         lifecycle1.state = DESTROYED
         val receivedValues = callbacks.invoke(token, "")
 
