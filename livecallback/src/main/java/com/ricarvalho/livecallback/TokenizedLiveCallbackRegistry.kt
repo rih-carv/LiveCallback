@@ -5,7 +5,7 @@ import androidx.lifecycle.Lifecycle
 @JvmInline
 value class TokenizedLiveCallbackRegistry<I, O> private constructor (
     private val registry: MutableMap<CallbackToken<I, O>, LiveCallbackContainer<I, O>>
-) {
+) : (CallbackToken<I, O>, I) -> List<O> {
     constructor() : this(mutableMapOf())
 
     fun register(lifecycle: Lifecycle, runWhileStopped: Boolean = false, callback: (I) -> O) =
@@ -16,5 +16,6 @@ value class TokenizedLiveCallbackRegistry<I, O> private constructor (
             container.register(lifecycle, runWhileStopped, callback)
         }
 
-    fun invoke(token: CallbackToken<I, O>, input: I) = registry[token]?.invoke(input).orEmpty()
+    override fun invoke(token: CallbackToken<I, O>, input: I) =
+        registry[token]?.invoke(input).orEmpty()
 }

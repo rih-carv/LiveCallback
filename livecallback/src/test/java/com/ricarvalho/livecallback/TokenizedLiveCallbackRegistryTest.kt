@@ -17,7 +17,7 @@ class TokenizedLiveCallbackRegistryTest {
             wasCalled = true
             ""
         }
-        callbacks.invoke(token, "")
+        callbacks(token, "")
 
         assert(wasCalled)
     }
@@ -30,7 +30,7 @@ class TokenizedLiveCallbackRegistryTest {
             wasCalled = true
             ""
         }
-        callbacks.invoke(token, "")
+        callbacks(token, "")
 
         assert(wasCalled)
     }
@@ -43,7 +43,7 @@ class TokenizedLiveCallbackRegistryTest {
             wasNotCalled = false
             ""
         }
-        callbacks.invoke(token, "")
+        callbacks(token, "")
 
         assert(wasNotCalled)
     }
@@ -56,7 +56,7 @@ class TokenizedLiveCallbackRegistryTest {
             wasNotCalled = false
             ""
         }
-        callbacks.invoke(token, "")
+        callbacks(token, "")
 
         assert(wasNotCalled)
     }
@@ -70,10 +70,10 @@ class TokenizedLiveCallbackRegistryTest {
             timesCalled++
             ""
         }
-        callbacks.invoke(token, "")
+        callbacks(token, "")
         lifecycle.state = DESTROYED
         lifecycle.state = STARTED
-        callbacks.invoke(token, "")
+        callbacks(token, "")
 
         assertEquals(1, timesCalled)
     }
@@ -86,8 +86,8 @@ class TokenizedLiveCallbackRegistryTest {
             timesCalled++
             ""
         }
-        callbacks.invoke(token, "")
-        callbacks.invoke(token, "")
+        callbacks(token, "")
+        callbacks(token, "")
 
         assertEquals(2, timesCalled)
     }
@@ -104,7 +104,7 @@ class TokenizedLiveCallbackRegistryTest {
         val oldToken = callbacks.register(lifecycle, callback = callback)
         lifecycle.state = DESTROYED
         val newToken = callbacks.register(TestLifecycle(STARTED), callback = callback)
-        callbacks.invoke(oldToken, "")
+        callbacks(oldToken, "")
 
         assertEquals(1, timesCalled)
         assertEquals(oldToken, newToken)
@@ -122,7 +122,7 @@ class TokenizedLiveCallbackRegistryTest {
         val oldToken = callbacks.register(lifecycle, callback = createCallback())
         lifecycle.state = DESTROYED
         val newToken = callbacks.register(TestLifecycle(STARTED), callback = createCallback())
-        callbacks.invoke(oldToken, "")
+        callbacks(oldToken, "")
 
         assertEquals(1, timesCalled)
         assertNotEquals(createCallback(), createCallback())
@@ -143,7 +143,7 @@ class TokenizedLiveCallbackRegistryTest {
             wasNotCalled = false
             ""
         }
-        callbacks.invoke(oldToken, "")
+        callbacks(oldToken, "")
 
         assert(wasNotCalled)
         assertNotEquals(oldToken, newToken)
@@ -160,7 +160,7 @@ class TokenizedLiveCallbackRegistryTest {
             ""
         }
         val input = "input"
-        callbacks.invoke(token, input)
+        callbacks(token, input)
 
         assertEquals(input, receivedValue)
     }
@@ -178,7 +178,7 @@ class TokenizedLiveCallbackRegistryTest {
         callbacks.register(TestLifecycle(STARTED), callback = callback)
 
         val input = "input,"
-        callbacks.invoke(token, input)
+        callbacks(token, input)
 
         assertEquals("input,input,", concatenatedValues)
     }
@@ -199,8 +199,8 @@ class TokenizedLiveCallbackRegistryTest {
 
         val input1 = "input1"
         val input2 = "input2"
-        callbacks.invoke(token1, input1)
-        callbacks.invoke(token2, input2)
+        callbacks(token1, input1)
+        callbacks(token2, input2)
 
         assertEquals(input1, receivedValue1)
         assertEquals(input2, receivedValue2)
@@ -213,7 +213,7 @@ class TokenizedLiveCallbackRegistryTest {
         val output = "output"
 
         val token = callbacks.register(TestLifecycle(STARTED)) { output }
-        val receivedValues = callbacks.invoke(token, "")
+        val receivedValues = callbacks(token, "")
 
         assertEquals(output, receivedValues.single())
     }
@@ -225,7 +225,7 @@ class TokenizedLiveCallbackRegistryTest {
 
         val token = callbacks.register(lifecycle) { output }
         lifecycle.state = DESTROYED
-        val receivedValues = callbacks.invoke(token, "")
+        val receivedValues = callbacks(token, "")
 
         assert(receivedValues.isEmpty())
     }
@@ -237,7 +237,7 @@ class TokenizedLiveCallbackRegistryTest {
 
         val token = callbacks.register(TestLifecycle(STARTED), callback = callback)
         callbacks.register(TestLifecycle(STARTED), callback = callback)
-        val receivedValues = callbacks.invoke(token, "")
+        val receivedValues = callbacks(token, "")
 
         assertEquals(2, receivedValues.size)
         assert(receivedValues.all { it == output })
@@ -251,7 +251,7 @@ class TokenizedLiveCallbackRegistryTest {
 
         val token = callbacks.register(TestLifecycle(STARTED), callback = callback(output1))
         callbacks.register(TestLifecycle(STARTED), callback = callback(output2))
-        val receivedValues = callbacks.invoke(token, "")
+        val receivedValues = callbacks(token, "")
 
         assertEquals(2, receivedValues.size)
         assertEquals(output1, receivedValues.firstOrNull())
@@ -265,8 +265,8 @@ class TokenizedLiveCallbackRegistryTest {
 
         val token1 = callbacks.register(TestLifecycle(STARTED)) { output1 }
         val token2 = callbacks.register(TestLifecycle(STARTED)) { output2 }
-        val receivedValues1 = callbacks.invoke(token1, "")
-        val receivedValues2 = callbacks.invoke(token2, "")
+        val receivedValues1 = callbacks(token1, "")
+        val receivedValues2 = callbacks(token2, "")
 
         assertEquals(output1, receivedValues1.single())
         assertEquals(output2, receivedValues2.single())
@@ -283,7 +283,7 @@ class TokenizedLiveCallbackRegistryTest {
         val token = callbacks.register(lifecycle1, callback = callback(output1))
         callbacks.register(lifecycle2, callback = callback(output2))
         lifecycle1.state = DESTROYED
-        val receivedValues = callbacks.invoke(token, "")
+        val receivedValues = callbacks(token, "")
 
         assertEquals(output2, receivedValues.single())
     }
