@@ -11,7 +11,7 @@ class LiveCallback<I, O>(
     callback: (I) -> O,
     private val runWhileStopped: Boolean = false,
     private val whenDestroyed: ((LiveCallback<I, O>) -> Unit)? = null
-) : DefaultLifecycleObserver {
+) : DefaultLifecycleObserver, (I) -> O? {
     private var lifecycle: Lifecycle? = lifecycle
     private var callback: ((I) -> O)? = callback
 
@@ -20,7 +20,7 @@ class LiveCallback<I, O>(
         else lifecycle.addObserver(this)
     }
 
-    fun invoke(input: I) = callback.takeIf {
+    override fun invoke(input: I) = callback.takeIf {
         runWhileStopped || lifecycle?.currentState?.isAtLeast(STARTED) == true
     }?.invoke(input)
 
