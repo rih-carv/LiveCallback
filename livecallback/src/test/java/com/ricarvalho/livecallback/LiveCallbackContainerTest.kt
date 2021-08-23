@@ -248,5 +248,20 @@ class LiveCallbackContainerTest {
         assertEquals(output1, receivedValues.firstOrNull())
         assertEquals(output2, receivedValues.lastOrNull())
     }
+
+    @Test
+    fun `callback output after some destroyed`() {
+        val output1 = "output1"
+        val output2 = "output2"
+        val lifecycle1 = TestLifecycle(STARTED)
+        val lifecycle2 = TestLifecycle(STARTED)
+
+        callbacks.register(lifecycle1) { output1 }
+        callbacks.register(lifecycle2) { output2 }
+        lifecycle1.state = DESTROYED
+        val receivedValues = callbacks.invoke("")
+
+        assertEquals(output2, receivedValues.single())
+    }
     //endregion
 }

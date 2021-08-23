@@ -16,5 +16,5 @@ value class TokenizedLiveCallbackRegistry<I, O> private constructor (
             container.register(lifecycle, callback)
         }
 
-    fun invoke(token: CallbackToken<I, O>, input: I) = registry[token]?.invoke(input)
+    fun invoke(token: CallbackToken<I, O>, input: I) = registry[token]?.invoke(input).orEmpty()
 }

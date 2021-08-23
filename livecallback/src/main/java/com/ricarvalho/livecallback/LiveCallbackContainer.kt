@@ -14,5 +14,5 @@ class LiveCallbackContainer<I, O>(
         })
     }
 
-    fun invoke(input: I) = callbacks.map { it.invoke(input) }
+    fun invoke(input: I) = callbacks.mapNotNull { it.invoke(input) }
 }
