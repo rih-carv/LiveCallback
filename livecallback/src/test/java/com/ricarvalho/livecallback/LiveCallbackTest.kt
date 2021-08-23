@@ -14,7 +14,7 @@ class LiveCallbackTest {
             it
         })
 
-        liveCallback.invoke("")
+        liveCallback("")
 
         assert(wasCalled)
     }
@@ -27,7 +27,7 @@ class LiveCallbackTest {
             wasCalled = true
             it
         }, true)
-        liveCallback.invoke("")
+        liveCallback("")
 
         assert(wasCalled)
     }
@@ -40,7 +40,7 @@ class LiveCallbackTest {
             wasNotCalled = false
             it
         })
-        liveCallback.invoke("")
+        liveCallback("")
 
         assert(wasNotCalled)
     }
@@ -53,7 +53,7 @@ class LiveCallbackTest {
             wasNotCalled = false
             it
         })
-        liveCallback.invoke("")
+        liveCallback("")
 
         assert(wasNotCalled)
     }
@@ -68,7 +68,7 @@ class LiveCallbackTest {
         })
 
         lifecycle.state = DESTROYED
-        liveCallback.invoke("")
+        liveCallback("")
 
         assert(wasNotCalled)
     }
@@ -82,7 +82,7 @@ class LiveCallbackTest {
         })
 
         val input = "input"
-        liveCallback.invoke(input)
+        liveCallback(input)
 
         assertEquals(input, receivedValue)
     }
@@ -92,7 +92,7 @@ class LiveCallbackTest {
         val output = "output"
         val liveCallback = LiveCallback<String, String>(TestLifecycle(STARTED), { output })
 
-        val receivedValue = liveCallback.invoke("")
+        val receivedValue = liveCallback("")
 
         assertEquals(output, receivedValue)
     }
@@ -104,7 +104,7 @@ class LiveCallbackTest {
         val liveCallback = LiveCallback<String, String>(lifecycle, { output })
 
         lifecycle.state = DESTROYED
-        val receivedValue = liveCallback.invoke("")
+        val receivedValue = liveCallback("")
 
         assertEquals(null, receivedValue)
     }

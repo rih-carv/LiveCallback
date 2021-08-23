@@ -17,7 +17,7 @@ class LiveCallbackContainerTest {
             wasCalled = true
             ""
         }
-        callbacks.invoke("")
+        callbacks("")
 
         assert(wasCalled)
     }
@@ -30,7 +30,7 @@ class LiveCallbackContainerTest {
             wasCalled = true
             ""
         }
-        callbacks.invoke("")
+        callbacks("")
 
         assert(wasCalled)
     }
@@ -43,7 +43,7 @@ class LiveCallbackContainerTest {
             wasNotCalled = false
             ""
         }
-        callbacks.invoke("")
+        callbacks("")
 
         assert(wasNotCalled)
     }
@@ -56,7 +56,7 @@ class LiveCallbackContainerTest {
             wasNotCalled = false
             ""
         }
-        callbacks.invoke("")
+        callbacks("")
 
         assert(wasNotCalled)
     }
@@ -70,10 +70,10 @@ class LiveCallbackContainerTest {
             timesCalled++
             ""
         }
-        callbacks.invoke("")
+        callbacks("")
         lifecycle.state = DESTROYED
         lifecycle.state = STARTED
-        callbacks.invoke("")
+        callbacks("")
 
         assertEquals(1, timesCalled)
     }
@@ -86,8 +86,8 @@ class LiveCallbackContainerTest {
             timesCalled++
             ""
         }
-        callbacks.invoke("")
-        callbacks.invoke("")
+        callbacks("")
+        callbacks("")
 
         assertEquals(2, timesCalled)
     }
@@ -165,7 +165,7 @@ class LiveCallbackContainerTest {
             ""
         }
         val input = "input"
-        callbacks.invoke(input)
+        callbacks(input)
 
         assertEquals(input, receivedValue)
     }
@@ -183,7 +183,7 @@ class LiveCallbackContainerTest {
         callbacks.register(TestLifecycle(STARTED), callback = callback)
 
         val input = "input,"
-        callbacks.invoke(input)
+        callbacks(input)
 
         assertEquals("input,input,", concatenatedValues)
     }
@@ -203,7 +203,7 @@ class LiveCallbackContainerTest {
         }
 
         val input = "input"
-        callbacks.invoke(input)
+        callbacks(input)
 
         assertEquals(input, receivedValue1)
         assertEquals(input, receivedValue2)
@@ -216,7 +216,7 @@ class LiveCallbackContainerTest {
         val output = "output"
 
         callbacks.register(TestLifecycle(STARTED)) { output }
-        val receivedValues = callbacks.invoke("")
+        val receivedValues = callbacks("")
 
         assertEquals(output, receivedValues.single())
     }
@@ -228,7 +228,7 @@ class LiveCallbackContainerTest {
 
         callbacks.register(lifecycle) { output }
         lifecycle.state = DESTROYED
-        val receivedValues = callbacks.invoke("")
+        val receivedValues = callbacks("")
 
         assert(receivedValues.isEmpty())
     }
@@ -240,7 +240,7 @@ class LiveCallbackContainerTest {
 
         callbacks.register(TestLifecycle(STARTED), callback = callback)
         callbacks.register(TestLifecycle(STARTED), callback = callback)
-        val receivedValues = callbacks.invoke("")
+        val receivedValues = callbacks("")
 
         assertEquals(2, receivedValues.size)
         assert(receivedValues.all { it == output })
@@ -254,7 +254,7 @@ class LiveCallbackContainerTest {
 
         callbacks.register(TestLifecycle(STARTED), callback = callback(output1))
         callbacks.register(TestLifecycle(STARTED), callback = callback(output2))
-        val receivedValues = callbacks.invoke("")
+        val receivedValues = callbacks("")
 
         assertEquals(2, receivedValues.size)
         assertEquals(output1, receivedValues.firstOrNull())
@@ -268,7 +268,7 @@ class LiveCallbackContainerTest {
 
         callbacks.register(TestLifecycle(STARTED)) { output1 }
         callbacks.register(TestLifecycle(STARTED)) { output2 }
-        val receivedValues = callbacks.invoke("")
+        val receivedValues = callbacks("")
 
         assertEquals(2, receivedValues.size)
         assertEquals(output1, receivedValues.firstOrNull())
@@ -285,7 +285,7 @@ class LiveCallbackContainerTest {
         callbacks.register(lifecycle1) { output1 }
         callbacks.register(lifecycle2) { output2 }
         lifecycle1.state = DESTROYED
-        val receivedValues = callbacks.invoke("")
+        val receivedValues = callbacks("")
 
         assertEquals(output2, receivedValues.single())
     }
