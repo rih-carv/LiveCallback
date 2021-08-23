@@ -142,7 +142,7 @@ class LiveCallbackContainerTest {
         lifecycle.state = Lifecycle.State.DESTROYED
         val receivedValues = callbacks.invoke("")
 
-        assertEquals(null, receivedValues.single())
+        assert(receivedValues.isEmpty())
     }
 
     @Test
