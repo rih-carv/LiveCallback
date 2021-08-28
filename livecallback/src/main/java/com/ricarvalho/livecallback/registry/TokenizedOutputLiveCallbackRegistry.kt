@@ -16,7 +16,7 @@ value class TokenizedOutputLiveCallbackRegistry<O> private constructor (
             val container = registry.getOrPut(token) {
                 LiveCallbackContainer(whenAllBeDestroyed = { registry.remove(token) })
             }
-            container.register(lifecycle, runWhileStopped) { callback() }
+            container.add(lifecycle, runWhileStopped) { callback() }
         }
 
     override fun invoke(token: OutputCallbackToken<O>) =

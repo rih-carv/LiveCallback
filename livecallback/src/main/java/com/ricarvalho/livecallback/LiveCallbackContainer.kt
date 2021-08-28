@@ -7,7 +7,7 @@ internal class LiveCallbackContainer<I, O>(
 ) : (I) -> List<O> {
     private val callbacks = mutableListOf<LiveCallback<I, O>>()
 
-    fun register(lifecycle: Lifecycle, runWhileStopped: Boolean = false, callback: (I) -> O) {
+    fun add(lifecycle: Lifecycle, runWhileStopped: Boolean = false, callback: (I) -> O) {
         callbacks += LiveCallback(lifecycle, callback, runWhileStopped, whenDestroyed = {
             callbacks.remove(it)
             if (callbacks.isEmpty()) whenAllBeDestroyed?.invoke(this)

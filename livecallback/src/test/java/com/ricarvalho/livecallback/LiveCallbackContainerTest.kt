@@ -13,7 +13,7 @@ class LiveCallbackContainerTest {
     fun `runs registered callback when called`() {
         var wasCalled = false
 
-        callbacks.register(TestLifecycle(STARTED)) {
+        callbacks.add(TestLifecycle(STARTED)) {
             wasCalled = true
             ""
         }
@@ -26,7 +26,7 @@ class LiveCallbackContainerTest {
     fun `runs while stopped`() {
         var wasCalled = false
 
-        callbacks.register(TestLifecycle(CREATED), true) {
+        callbacks.add(TestLifecycle(CREATED), true) {
             wasCalled = true
             ""
         }
@@ -39,7 +39,7 @@ class LiveCallbackContainerTest {
     fun `doesn't runs while stopped`() {
         var wasNotCalled = true
 
-        callbacks.register(TestLifecycle(CREATED)) {
+        callbacks.add(TestLifecycle(CREATED)) {
             wasNotCalled = false
             ""
         }
@@ -52,7 +52,7 @@ class LiveCallbackContainerTest {
     fun `doesn't runs when lifecycle is destroyed`() {
         var wasNotCalled = true
 
-        callbacks.register(TestLifecycle(DESTROYED)) {
+        callbacks.add(TestLifecycle(DESTROYED)) {
             wasNotCalled = false
             ""
         }
@@ -66,7 +66,7 @@ class LiveCallbackContainerTest {
         var timesCalled = 0
         val lifecycle = TestLifecycle(STARTED)
 
-        callbacks.register(lifecycle) {
+        callbacks.add(lifecycle) {
             timesCalled++
             ""
         }
@@ -82,7 +82,7 @@ class LiveCallbackContainerTest {
     fun `runs as many times as called`() {
         var timesCalled = 0
 
-        callbacks.register(TestLifecycle(STARTED)) {
+        callbacks.add(TestLifecycle(STARTED)) {
             timesCalled++
             ""
         }
@@ -98,7 +98,7 @@ class LiveCallbackContainerTest {
         val lifecycle = TestLifecycle(STARTED)
         LiveCallbackContainer<String, String> {
             wasCalled = true
-        }.register(lifecycle) { it }
+        }.add(lifecycle) { it }
 
         lifecycle.state = DESTROYED
 
@@ -111,7 +111,7 @@ class LiveCallbackContainerTest {
         val lifecycle = TestLifecycle(STARTED)
         LiveCallbackContainer<String, String> {
             wasNotCalled = false
-        }.register(lifecycle) { it }
+        }.add(lifecycle) { it }
 
         lifecycle.state = CREATED
 
@@ -126,8 +126,8 @@ class LiveCallbackContainerTest {
         LiveCallbackContainer<String, String> {
             wasCalled = true
         }.apply {
-            register(lifecycle1) { it }
-            register(lifecycle2) { it }
+            add(lifecycle1) { it }
+            add(lifecycle2) { it }
         }
 
         lifecycle1.state = DESTROYED
@@ -144,8 +144,8 @@ class LiveCallbackContainerTest {
         LiveCallbackContainer<String, String> {
             wasNotCalled = false
         }.apply {
-            register(lifecycle1) { it }
-            register(lifecycle2) { it }
+            add(lifecycle1) { it }
+            add(lifecycle2) { it }
         }
 
         lifecycle1.state = DESTROYED
@@ -160,7 +160,7 @@ class LiveCallbackContainerTest {
     fun `callback input`() {
         lateinit var receivedValue: String
 
-        callbacks.register(TestLifecycle(STARTED)) {
+        callbacks.add(TestLifecycle(STARTED)) {
             receivedValue = it
             ""
         }
@@ -179,8 +179,8 @@ class LiveCallbackContainerTest {
             ""
         }
 
-        callbacks.register(TestLifecycle(STARTED), callback = callback)
-        callbacks.register(TestLifecycle(STARTED), callback = callback)
+        callbacks.add(TestLifecycle(STARTED), callback = callback)
+        callbacks.add(TestLifecycle(STARTED), callback = callback)
 
         val input = "input,"
         callbacks(input)
@@ -193,11 +193,11 @@ class LiveCallbackContainerTest {
         lateinit var receivedValue1: String
         lateinit var receivedValue2: String
 
-        callbacks.register(TestLifecycle(STARTED)) {
+        callbacks.add(TestLifecycle(STARTED)) {
             receivedValue1 = it
             ""
         }
-        callbacks.register(TestLifecycle(STARTED)) {
+        callbacks.add(TestLifecycle(STARTED)) {
             receivedValue2 = it
             ""
         }
@@ -215,7 +215,7 @@ class LiveCallbackContainerTest {
     fun `callback output`() {
         val output = "output"
 
-        callbacks.register(TestLifecycle(STARTED)) { output }
+        callbacks.add(TestLifecycle(STARTED)) { output }
         val receivedValues = callbacks("")
 
         assertEquals(output, receivedValues.single())
@@ -226,7 +226,7 @@ class LiveCallbackContainerTest {
         val output = "output"
         val lifecycle = TestLifecycle(STARTED)
 
-        callbacks.register(lifecycle) { output }
+        callbacks.add(lifecycle) { output }
         lifecycle.state = DESTROYED
         val receivedValues = callbacks("")
 
@@ -238,8 +238,8 @@ class LiveCallbackContainerTest {
         val output = "output"
         val callback: (String) -> String = { output }
 
-        callbacks.register(TestLifecycle(STARTED), callback = callback)
-        callbacks.register(TestLifecycle(STARTED), callback = callback)
+        callbacks.add(TestLifecycle(STARTED), callback = callback)
+        callbacks.add(TestLifecycle(STARTED), callback = callback)
         val receivedValues = callbacks("")
 
         assertEquals(2, receivedValues.size)
@@ -252,8 +252,8 @@ class LiveCallbackContainerTest {
         val output2 = "output2"
         fun callback(output: String): (String) -> String = { output }
 
-        callbacks.register(TestLifecycle(STARTED), callback = callback(output1))
-        callbacks.register(TestLifecycle(STARTED), callback = callback(output2))
+        callbacks.add(TestLifecycle(STARTED), callback = callback(output1))
+        callbacks.add(TestLifecycle(STARTED), callback = callback(output2))
         val receivedValues = callbacks("")
 
         assertEquals(2, receivedValues.size)
@@ -266,8 +266,8 @@ class LiveCallbackContainerTest {
         val output1 = "output1"
         val output2 = "output2"
 
-        callbacks.register(TestLifecycle(STARTED)) { output1 }
-        callbacks.register(TestLifecycle(STARTED)) { output2 }
+        callbacks.add(TestLifecycle(STARTED)) { output1 }
+        callbacks.add(TestLifecycle(STARTED)) { output2 }
         val receivedValues = callbacks("")
 
         assertEquals(2, receivedValues.size)
@@ -282,8 +282,8 @@ class LiveCallbackContainerTest {
         val lifecycle1 = TestLifecycle(STARTED)
         val lifecycle2 = TestLifecycle(STARTED)
 
-        callbacks.register(lifecycle1) { output1 }
-        callbacks.register(lifecycle2) { output2 }
+        callbacks.add(lifecycle1) { output1 }
+        callbacks.add(lifecycle2) { output2 }
         lifecycle1.state = DESTROYED
         val receivedValues = callbacks("")
 
