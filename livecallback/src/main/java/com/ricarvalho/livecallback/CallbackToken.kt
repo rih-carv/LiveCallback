@@ -1,5 +1,10 @@
 package com.ricarvalho.livecallback
 
+import com.ricarvalho.livecallback.registry.TokenizedInputLiveCallbackRegistry
+import com.ricarvalho.livecallback.registry.TokenizedLiveCallbackRegistry
+import com.ricarvalho.livecallback.registry.TokenizedOutputLiveCallbackRegistry
+import com.ricarvalho.livecallback.registry.TokenizedSimpleLiveCallbackRegistry
+
 /**
  * A normalized identification of a callback's origin, agnostic to its instance.
  *
@@ -60,3 +65,19 @@ value class CallbackToken<I, O> private constructor(private val token: String) {
         private val Any.token get() = this::class.java.name
     }
 }
+
+infix fun <I, O> CallbackToken<I, O>.asLambdaOn( // TODO: Test
+    registry: TokenizedLiveCallbackRegistry<I, O>
+): (I) -> List<O> = { registry(this, it) }
+
+infix fun <I> InputCallbackToken<I>.asLambdaOn( // TODO: Test
+    registry: TokenizedInputLiveCallbackRegistry<I>
+): (I) -> Unit = { registry(this, it) }
+
+infix fun <O> OutputCallbackToken<O>.asLambdaOn( // TODO: Test
+    registry: TokenizedOutputLiveCallbackRegistry<O>
+): () -> List<O> = { registry(this) }
+
+infix fun SimpleCallbackToken.asLambdaOn( // TODO: Test
+    registry: TokenizedSimpleLiveCallbackRegistry
+): () -> Unit = { registry(this) }

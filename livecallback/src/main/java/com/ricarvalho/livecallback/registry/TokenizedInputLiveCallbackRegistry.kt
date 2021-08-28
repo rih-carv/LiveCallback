@@ -94,4 +94,6 @@ value class TokenizedInputLiveCallbackRegistry<I> private constructor(
     override operator fun invoke(token: InputCallbackToken<I>, input: I) {
         registry(token, input)
     }
+
+    infix fun lambdaFor(token: InputCallbackToken<I>): (I) -> Unit = { this(token, it) } // TODO: Test
 }

@@ -99,4 +99,6 @@ value class TokenizedOutputLiveCallbackRegistry<O> private constructor(
      */
     override operator fun invoke(token: OutputCallbackToken<O>) =
         registry[token]?.invoke(null).orEmpty()
+
+    infix fun lambdaFor(token: OutputCallbackToken<O>): () -> List<O> = { this(token) } // TODO: Test
 }

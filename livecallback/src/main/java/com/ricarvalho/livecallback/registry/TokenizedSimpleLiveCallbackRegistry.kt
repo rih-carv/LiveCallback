@@ -92,4 +92,6 @@ value class TokenizedSimpleLiveCallbackRegistry private constructor(
     override operator fun invoke(token: SimpleCallbackToken) {
         registry(token)
     }
+
+    infix fun lambdaFor(token: SimpleCallbackToken): () -> Unit = { this(token) } // TODO: Test
 }

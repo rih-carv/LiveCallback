@@ -101,4 +101,6 @@ value class TokenizedLiveCallbackRegistry<I, O> private constructor(
      */
     override operator fun invoke(token: CallbackToken<I, O>, input: I) =
         registry[token]?.invoke(input).orEmpty()
+
+    infix fun lambdaFor(token: CallbackToken<I, O>): (I) -> List<O> = { this(token, it) } // TODO: Test
 }
