@@ -5,10 +5,10 @@ typealias OutputCallbackToken<O> = CallbackToken<Void, O>
 typealias SimpleCallbackToken = CallbackToken<Void, Unit>
 
 @kotlin.jvm.JvmInline
-value class CallbackToken<I, O> private constructor(val token: String) {
+value class CallbackToken<I, O> private constructor(private val token: String) {
     internal constructor(callback: (I) -> O) : this(callback.token)
 
-    companion object {
+    internal companion object {
         internal fun <I> input(callback: (I) -> Unit) = InputCallbackToken<I>(callback.token)
 
         internal fun <O> output(callback: () -> O) = OutputCallbackToken<O>(callback.token)
