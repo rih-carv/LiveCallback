@@ -15,7 +15,7 @@ value class TokenizedLiveCallbackRegistry<I, O> private constructor (
             val container = registry.getOrPut(token) {
                 LiveCallbackContainer(whenAllBeDestroyed = { registry.remove(token) })
             }
-            container.register(lifecycle, runWhileStopped, callback)
+            container.add(lifecycle, runWhileStopped, callback)
         }
 
     override fun invoke(token: CallbackToken<I, O>, input: I) =

@@ -6,7 +6,7 @@ import androidx.lifecycle.Lifecycle.State.DESTROYED
 import androidx.lifecycle.Lifecycle.State.STARTED
 import androidx.lifecycle.LifecycleOwner
 
-class LiveCallback<I, O>(
+internal class LiveCallback<I, O>(
     lifecycle: Lifecycle,
     callback: (I) -> O,
     private val runWhileStopped: Boolean = false,
