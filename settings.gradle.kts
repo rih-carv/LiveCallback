@@ -1,4 +1,4 @@
-rootProject.name = "livecallback"
+rootProject.name = "LiveCallback"
 include(
     ":sample",
     ":livecallback"
