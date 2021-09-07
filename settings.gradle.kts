@@ -1,5 +1,6 @@
 rootProject.name = "LiveCallback"
 include(
     ":sample",
-    ":livecallback"
+    ":livecallback",
+    ":livecallback-postponable"
 )

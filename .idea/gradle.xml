@@ -12,6 +12,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/livecallback" />
+            <option value="$PROJECT_DIR$/livecallback-postponable" />
             <option value="$PROJECT_DIR$/sample" />
           </set>
         </option>
