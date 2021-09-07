@@ -21,4 +21,6 @@ value class TokenizedOutputLiveCallbackRegistry<O> private constructor (
 
     override fun invoke(token: OutputCallbackToken<O>) =
         registry[token]?.invoke(null).orEmpty()
+
+    override fun contains(token: OutputCallbackToken<O>) = token in registry
 }

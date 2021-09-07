@@ -15,4 +15,6 @@ value class TokenizedInputLiveCallbackRegistry<I> private constructor (
     override fun invoke(token: InputCallbackToken<I>, input: I) {
         registry(token, input)
     }
+
+    override fun contains(token: InputCallbackToken<I>) = token in registry
 }

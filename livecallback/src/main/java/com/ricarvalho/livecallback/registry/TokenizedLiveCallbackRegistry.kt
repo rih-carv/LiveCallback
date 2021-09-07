@@ -20,4 +20,6 @@ value class TokenizedLiveCallbackRegistry<I, O> private constructor (
 
     override fun invoke(token: CallbackToken<I, O>, input: I) =
         registry[token]?.invoke(input).orEmpty()
+
+    override fun contains(token: CallbackToken<I, O>) = token in registry
 }

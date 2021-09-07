@@ -15,4 +15,6 @@ value class TokenizedSimpleLiveCallbackRegistry private constructor (
     override fun invoke(token: SimpleCallbackToken) {
         registry(token)
     }
+
+    override fun contains(token: SimpleCallbackToken) = token in registry
 }
