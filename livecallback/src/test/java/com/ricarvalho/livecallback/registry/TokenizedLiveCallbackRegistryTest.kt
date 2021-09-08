@@ -1,6 +1,7 @@
 package com.ricarvalho.livecallback.registry
 
 import androidx.lifecycle.Lifecycle.State.*
+import com.ricarvalho.livecallback.Callback
 import com.ricarvalho.livecallback.lifecycle.TestLifecycle
 import org.junit.Assert.*
 import org.junit.Test
@@ -97,7 +98,7 @@ class TokenizedLiveCallbackRegistryTest {
     fun `runs even with token of a destroyed lifecycle if callbacks are the same`() {
         var timesCalled = 0
         val lifecycle = TestLifecycle(STARTED)
-        val callback: (String) -> String = {
+        val callback: Callback<String, String> = {
             timesCalled++
             ""
         }
@@ -115,7 +116,7 @@ class TokenizedLiveCallbackRegistryTest {
     fun `runs even with token of a destroyed lifecycle if callbacks origins are the same`() {
         var timesCalled = 0
         val lifecycle = TestLifecycle(STARTED)
-        fun createCallback(): (String) -> String = {
+        fun createCallback(): Callback<String, String> = {
             timesCalled++
             ""
         }
@@ -170,7 +171,7 @@ class TokenizedLiveCallbackRegistryTest {
     fun `callback input with callback registered many times`() {
         var concatenatedValues = ""
 
-        val callback: (String) -> String = {
+        val callback: Callback<String, String> = {
             concatenatedValues += it
             ""
         }
@@ -234,7 +235,7 @@ class TokenizedLiveCallbackRegistryTest {
     @Test
     fun `callback output with callback registered many times`() {
         val output = "output"
-        val callback: (String) -> String = { output }
+        val callback: Callback<String, String> = { output }
 
         val token = registry.register(TestLifecycle(STARTED), callback = callback)
         registry.register(TestLifecycle(STARTED), callback = callback)
@@ -248,7 +249,7 @@ class TokenizedLiveCallbackRegistryTest {
     fun `callback output with many dynamic callbacks`() {
         val output1 = "output1"
         val output2 = "output2"
-        fun callback(output: String): (String) -> String = { output }
+        fun callback(output: String): Callback<String, String> = { output }
 
         val token = registry.register(TestLifecycle(STARTED), callback = callback(output1))
         registry.register(TestLifecycle(STARTED), callback = callback(output2))
@@ -279,7 +280,7 @@ class TokenizedLiveCallbackRegistryTest {
         val output2 = "output2"
         val lifecycle1 = TestLifecycle(STARTED)
         val lifecycle2 = TestLifecycle(STARTED)
-        fun callback(output: String): (String) -> String = { output }
+        fun callback(output: String): Callback<String, String> = { output }
 
         val token = registry.register(lifecycle1, callback = callback(output1))
         registry.register(lifecycle2, callback = callback(output2))

@@ -15,7 +15,7 @@ class CallbackTokenTest {
 
     @Test
     fun `tokens of the same callback should be equal`() {
-        val callback: (String) -> String = { it }
+        val callback: Callback<String, String> = { it }
         val token1 = CallbackToken(callback)
         val token2 = CallbackToken(callback)
 
@@ -25,7 +25,7 @@ class CallbackTokenTest {
     @Test
     fun `tokens of different callback instances with the same origin should be equal`() {
         val externalValueToForceNewLambdaInstance = ""
-        fun callback(): (String) -> String = { externalValueToForceNewLambdaInstance }
+        fun callback(): Callback<String, String> = { externalValueToForceNewLambdaInstance }
 
         val callback1 = callback()
         val callback2 = callback()
@@ -48,7 +48,7 @@ class CallbackTokenTest {
 
     @Test
     fun `input tokens of the same callback should be equal`() {
-        val callback: (String) -> Unit = {}
+        val callback: InputCallback<String> = {}
         val token1 = CallbackToken.input(callback)
         val token2 = CallbackToken.input(callback)
 
@@ -58,7 +58,7 @@ class CallbackTokenTest {
     @Test
     fun `input tokens of different callback instances with the same origin should be equal`() {
         val externalValueToForceNewLambdaInstance = ""
-        fun callback(): (String) -> Unit = { externalValueToForceNewLambdaInstance.run {} }
+        fun callback(): InputCallback<String> = { externalValueToForceNewLambdaInstance.run {} }
 
         val callback1 = callback()
         val callback2 = callback()
@@ -81,7 +81,7 @@ class CallbackTokenTest {
 
     @Test
     fun `output tokens of the same callback should be equal`() {
-        val callback: () -> String = { "" }
+        val callback: OutputCallback<String> = { "" }
         val token1 = CallbackToken.output(callback)
         val token2 = CallbackToken.output(callback)
 
@@ -91,7 +91,7 @@ class CallbackTokenTest {
     @Test
     fun `output tokens of different callback instances with the same origin should be equal`() {
         val externalValueToForceNewLambdaInstance = ""
-        fun callback(): () -> String = { externalValueToForceNewLambdaInstance }
+        fun callback(): OutputCallback<String> = { externalValueToForceNewLambdaInstance }
 
         val callback1 = callback()
         val callback2 = callback()
@@ -114,7 +114,7 @@ class CallbackTokenTest {
 
     @Test
     fun `simple tokens of the same callback should be equal`() {
-        val callback: () -> Unit = {}
+        val callback: SimpleCallback = {}
         val token1 = CallbackToken.simple(callback)
         val token2 = CallbackToken.simple(callback)
 
@@ -124,7 +124,7 @@ class CallbackTokenTest {
     @Test
     fun `simple tokens of different callback instances with the same origin should be equal`() {
         val externalValueToForceNewLambdaInstance = ""
-        fun callback(): () -> Unit = { externalValueToForceNewLambdaInstance.run {} }
+        fun callback(): SimpleCallback = { externalValueToForceNewLambdaInstance.run {} }
 
         val callback1 = callback()
         val callback2 = callback()

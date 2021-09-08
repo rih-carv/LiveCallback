@@ -8,19 +8,19 @@ import androidx.lifecycle.LifecycleOwner
 
 internal class LiveCallback<I, O>(
     lifecycle: Lifecycle,
-    callback: (I) -> O,
+    callback: Callback<I, O>,
     private val runWhileStopped: Boolean = false,
-    private val whenDestroyed: ((LiveCallback<I, O>) -> Unit)? = null
+    private val whenDestroyed: ((liveCallback: LiveCallback<I, O>) -> Unit)? = null
 ) : DefaultLifecycleObserver, (I) -> O? {
     private var lifecycle: Lifecycle? = lifecycle
-    private var callback: ((I) -> O)? = callback
+    private var callback: Callback<I, O>? = callback
 
     init {
         if (lifecycle.currentState == DESTROYED) finish()
         else lifecycle.addObserver(this)
     }
 
-    override fun invoke(input: I) = callback.takeIf {
+    override operator fun invoke(input: I) = callback.takeIf {
         runWhileStopped || lifecycle?.currentState?.isAtLeast(STARTED) == true
     }?.invoke(input)
 

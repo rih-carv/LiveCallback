@@ -1,6 +1,7 @@
 package com.ricarvalho.livecallback.registry
 
 import androidx.lifecycle.Lifecycle.State.*
+import com.ricarvalho.livecallback.SimpleCallback
 import com.ricarvalho.livecallback.lifecycle.TestLifecycle
 import org.junit.Assert.*
 import org.junit.Test
@@ -79,7 +80,7 @@ class TokenizedSimpleLiveCallbackRegistryTest {
     fun `runs even with token of a destroyed lifecycle if callbacks are the same`() {
         var timesCalled = 0
         val lifecycle = TestLifecycle(STARTED)
-        val callback: () -> Unit = { timesCalled++ }
+        val callback: SimpleCallback = { timesCalled++ }
 
         val oldToken = registry.register(lifecycle, callback = callback)
         lifecycle.state = DESTROYED
@@ -94,7 +95,7 @@ class TokenizedSimpleLiveCallbackRegistryTest {
     fun `runs even with token of a destroyed lifecycle if callbacks origins are the same`() {
         var timesCalled = 0
         val lifecycle = TestLifecycle(STARTED)
-        fun createCallback(): () -> Unit = { timesCalled++ }
+        fun createCallback(): SimpleCallback = { timesCalled++ }
 
         val oldToken = registry.register(lifecycle, callback = createCallback())
         lifecycle.state = DESTROYED

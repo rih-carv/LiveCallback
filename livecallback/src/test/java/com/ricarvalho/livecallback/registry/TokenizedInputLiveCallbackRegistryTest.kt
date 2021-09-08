@@ -1,6 +1,7 @@
 package com.ricarvalho.livecallback.registry
 
 import androidx.lifecycle.Lifecycle.State.*
+import com.ricarvalho.livecallback.InputCallback
 import com.ricarvalho.livecallback.lifecycle.TestLifecycle
 import org.junit.Assert.*
 import org.junit.Test
@@ -137,7 +138,7 @@ class TokenizedInputLiveCallbackRegistryTest {
     fun `callback input with callback registered many times`() {
         var concatenatedValues = ""
 
-        val callback: (String) -> Unit = { concatenatedValues += it }
+        val callback: InputCallback<String> = { concatenatedValues += it }
 
         val token = registry.register(TestLifecycle(STARTED), callback = callback)
         registry.register(TestLifecycle(STARTED), callback = callback)

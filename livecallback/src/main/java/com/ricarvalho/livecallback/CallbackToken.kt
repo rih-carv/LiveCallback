@@ -1,19 +1,15 @@
 package com.ricarvalho.livecallback
 
-typealias InputCallbackToken<I> = CallbackToken<I, Unit>
-typealias OutputCallbackToken<O> = CallbackToken<Void, O>
-typealias SimpleCallbackToken = CallbackToken<Void, Unit>
-
 @kotlin.jvm.JvmInline
 value class CallbackToken<I, O> private constructor(private val token: String) {
-    internal constructor(callback: (I) -> O) : this(callback.token)
+    internal constructor(callback: Callback<I, O>) : this(callback.token)
 
     internal companion object {
-        internal fun <I> input(callback: (I) -> Unit) = InputCallbackToken<I>(callback.token)
+        internal fun <I> input(callback: InputCallback<I>) = InputCallbackToken<I>(callback.token)
 
-        internal fun <O> output(callback: () -> O) = OutputCallbackToken<O>(callback.token)
+        internal fun <O> output(callback: OutputCallback<O>) = OutputCallbackToken<O>(callback.token)
 
-        internal fun simple(callback: () -> Unit) = SimpleCallbackToken(callback.token)
+        internal fun simple(callback: SimpleCallback) = SimpleCallbackToken(callback.token)
 
         private val Any.token get() = this::class.java.name
     }

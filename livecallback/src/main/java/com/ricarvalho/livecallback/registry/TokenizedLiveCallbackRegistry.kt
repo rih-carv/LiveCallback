@@ -1,6 +1,7 @@
 package com.ricarvalho.livecallback.registry
 
 import androidx.lifecycle.Lifecycle
+import com.ricarvalho.livecallback.Callback
 import com.ricarvalho.livecallback.CallbackToken
 import com.ricarvalho.livecallback.LiveCallbackContainer
 
@@ -10,14 +11,17 @@ value class TokenizedLiveCallbackRegistry<I, O> private constructor (
 ) : LiveCallbackRegistry<I, O>, (CallbackToken<I, O>, I) -> List<O> {
     constructor() : this(mutableMapOf())
 
-    override fun register(lifecycle: Lifecycle, runWhileStopped: Boolean, callback: (I) -> O) =
-        CallbackToken(callback).also { token ->
-            val container = registry.getOrPut(token) {
-                LiveCallbackContainer(whenAllBeDestroyed = { registry.remove(token) })
-            }
-            container.add(lifecycle, runWhileStopped, callback)
+    override fun register(
+        lifecycle: Lifecycle,
+        runWhileStopped: Boolean,
+        callback: Callback<I, O>
+    ) = CallbackToken(callback).also { token ->
+        val container = registry.getOrPut(token) {
+            LiveCallbackContainer(whenAllBeDestroyed = { registry.remove(token) })
         }
+        container.add(lifecycle, runWhileStopped, callback)
+    }
 
-    override fun invoke(token: CallbackToken<I, O>, input: I) =
+    override operator fun invoke(token: CallbackToken<I, O>, input: I) =
         registry[token]?.invoke(input).orEmpty()
 }
