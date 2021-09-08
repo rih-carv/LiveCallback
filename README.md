@@ -102,25 +102,22 @@ class FragileFragment : Fragment() {
   the component is recreated.
 
 # Callback types
-- __Full callback__: for use cases where callbacks receive a parameter and return some value
+- __Full callback__: for use cases where callbacks receive a parameter and return a value
   - Register-only Registry interface: `LiveCallbackRegistry<Input, Output>`
   - Invocable Registry: `TokenizedLiveCallbackRegistry<Input, Output>`
   - CallbackToken: `CallbackToken<Input, Output>`
   - Callback: `(Input) -> Output`
-- __Input only callback__: for use cases where callbacks receive a parameter and don't return any
-  value
+- __Input only callback__: for use cases where callbacks receive a parameter and return no value
   - Register-only Registry interface: `InputLiveCallbackRegistry<Input>`
   - Invocable Registry: `TokenizedInputLiveCallbackRegistry<Input>`
   - CallbackToken: `InputCallbackToken<Input>`
   - Callback: `(Input) -> Unit`
-- __Output only callback__: for use cases where callbacks don't receive any parameter and return
-  some value
+- __Output only callback__: for use cases where callbacks receive no parameters and return a value
   - Register-only Registry interface: `OutputLiveCallbackRegistry<Output>`
   - Invocable Registry: `TokenizedOutputLiveCallbackRegistry<Output>`
   - CallbackToken: `OutputCallbackToken<Output>`
   - Callback: `() -> Output`
-- __Simple callback__: for use cases where callbacks don't receive any parameter and don't return
-  any value
+- __Simple callback__: for use cases where callbacks receive no parameters and return no value
   - Register-only Registry interface: `SimpleLiveCallbackRegistry`
   - Invocable Registry: `TokenizedSimpleLiveCallbackRegistry`
   - CallbackToken: `SimpleCallbackToken`
