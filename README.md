@@ -3,7 +3,7 @@ LiveCallback is a library project that aims to make dealing with async callbacks
 and straightforward.
 
 ## Benefits:
-It provides Lifecycle-Aware components that:
+It provides lifecycle-aware components that:
 - **Prevents memory leaks**: by releasing the callbacks when lifecycle owners are destroyed.
 - **Allows to prevent unwanted executions**: running only while lifecycle owners are into active
   states, ignoring invocations by default before owners enter into `STARTED` state and while
