@@ -174,7 +174,7 @@ class LiveCallbackContainerTest {
     fun `callback input with callback registered many times`() {
         var concatenatedValues = ""
 
-        val callback: (String) -> String = {
+        val callback: Callback<String, String> = {
             concatenatedValues += it
             ""
         }
@@ -236,7 +236,7 @@ class LiveCallbackContainerTest {
     @Test
     fun `callback output with callback registered many times`() {
         val output = "output"
-        val callback: (String) -> String = { output }
+        val callback: Callback<String, String> = { output }
 
         callbacks.add(TestLifecycle(STARTED), callback = callback)
         callbacks.add(TestLifecycle(STARTED), callback = callback)
@@ -250,7 +250,7 @@ class LiveCallbackContainerTest {
     fun `callback output with many dynamic callbacks`() {
         val output1 = "output1"
         val output2 = "output2"
-        fun callback(output: String): (String) -> String = { output }
+        fun callback(output: String): Callback<String, String> = { output }
 
         callbacks.add(TestLifecycle(STARTED), callback = callback(output1))
         callbacks.add(TestLifecycle(STARTED), callback = callback(output2))
