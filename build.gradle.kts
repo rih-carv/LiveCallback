@@ -31,4 +31,8 @@ allprojects {
             ktlint()
         }
     }
+
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
+        if (System.getenv("CI") == "true") kotlinOptions.allWarningsAsErrors = true
+    }
 }
