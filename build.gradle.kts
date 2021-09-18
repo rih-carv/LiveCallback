@@ -5,7 +5,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:7.0.1")
+        classpath("com.android.tools.build:gradle:7.0.2")
         classpath(embeddedKotlin("gradle-plugin"))
     }
 }
@@ -17,6 +17,6 @@ allprojects {
     }
 }
 
-tasks.register("clean", Delete::class) {
+val clean by tasks.registering(Delete::class) {
     delete(rootProject.buildDir)
 }
