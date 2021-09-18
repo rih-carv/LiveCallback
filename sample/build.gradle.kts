@@ -30,6 +30,7 @@ android {
     }
 
     kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8.toString()
+    viewBinding.isEnabled = true
 }
 
 dependencies {
@@ -39,6 +40,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.3.1")
     implementation("com.google.android.material:material:1.4.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
