@@ -1,7 +1,9 @@
 package com.ricarvalho.livecallback.registry
 
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.Lifecycle.State.*
+import androidx.lifecycle.Lifecycle.State.DESTROYED
+import androidx.lifecycle.Lifecycle.State.RESUMED
+import androidx.lifecycle.Lifecycle.State.STARTED
 import androidx.lifecycle.LifecycleOwner
 import com.ricarvalho.livecallback.CallbackToken
 import com.ricarvalho.livecallback.LiveCallbackContainer

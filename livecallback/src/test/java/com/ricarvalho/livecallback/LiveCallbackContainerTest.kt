@@ -1,8 +1,10 @@
 package com.ricarvalho.livecallback
 
-import androidx.lifecycle.Lifecycle.State.*
+import androidx.lifecycle.Lifecycle.State.CREATED
+import androidx.lifecycle.Lifecycle.State.DESTROYED
+import androidx.lifecycle.Lifecycle.State.STARTED
 import com.ricarvalho.livecallback.lifecycle.TestLifecycle
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class LiveCallbackContainerTest {

@@ -42,8 +42,10 @@ publishing {
             artifact(dokkaHtmlJar)
             pom {
                 name.set("LiveCallback")
-                description.set("LiveCallback is a library project that aims to make dealing with" +
-                        " async callbacks on Android safer and straightforward.")
+                description.set(
+                    "LiveCallback is a library project that aims to make dealing with" +
+                        " async callbacks on Android safer and straightforward."
+                )
                 url.set("https://rih-carv.github.io/LiveCallback")
                 licenses {
                     license {
