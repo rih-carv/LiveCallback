@@ -1,4 +1,4 @@
-name: Gradle publish to Sonatype Central Repository
+name: Publish to Sonatype Central Repository
 
 on:
   release:

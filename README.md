@@ -2,6 +2,10 @@
 LiveCallback is a library project that aims to make dealing with async callbacks on Android safer
 and straightforward.
 
+[![kotlin](https://img.shields.io/badge/Kotlin-grey.svg?logo=kotlin&logoColor=lightgrey)](https://kotlinlang.org)
+[![version](https://img.shields.io/github/v/release/rih-carv/LiveCallback?label=Latest%20version&logo=gradle&logoColor=lightgrey)](https://github.com/rih-carv/LiveCallback/releases)
+[![validations](https://github.com/rih-carv/LiveCallback/actions/workflows/validations.yml/badge.svg)](https://github.com/rih-carv/LiveCallback/actions/workflows/validations.yml)
+
 ## Benefits:
 It provides lifecycle-aware components that:
 - **Prevents memory leaks**: by releasing the callbacks when lifecycle owners are destroyed.
