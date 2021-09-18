@@ -32,55 +32,51 @@ val dokkaHtmlJar by tasks.register<Jar>("dokkaHtmlJar") {
 }
 
 publishing {
-    publications {
-        register<MavenPublication>("library") {
-            from(components["java"])
-            version = "1.0.0"
-            groupId = "io.github.rih-carv"
-            artifactId = "livecallback"
-            artifact(dokkaJavadocJar)
-            artifact(dokkaHtmlJar)
-            pom {
-                name.set("LiveCallback")
-                description.set(
-                    "LiveCallback is a library project that aims to make dealing with" +
-                        " async callbacks on Android safer and straightforward."
-                )
-                url.set("https://rih-carv.github.io/LiveCallback")
-                licenses {
-                    license {
-                        name.set("The MIT License")
-                        url.set("https://opensource.org/licenses/mit-license.php")
-                    }
+    publications.register<MavenPublication>("library") {
+        from(components["java"])
+        version = "1.0.0"
+        groupId = "io.github.rih-carv"
+        artifactId = "livecallback"
+        artifact(dokkaJavadocJar)
+        artifact(dokkaHtmlJar)
+        pom {
+            name.set("LiveCallback")
+            description.set(
+                "LiveCallback is a library project that aims to make dealing with async callbacks" +
+                    " on Android safer and straightforward."
+            )
+            url.set("https://rih-carv.github.io/LiveCallback")
+            licenses {
+                license {
+                    name.set("The MIT License")
+                    url.set("https://opensource.org/licenses/mit-license.php")
                 }
-                developers {
-                    developer {
-                        id.set("rih-carv")
-                        name.set("Ricardo de Carvalho")
-                        email.set("rih-carv@gmail.com")
-                    }
+            }
+            developers {
+                developer {
+                    id.set("rih-carv")
+                    name.set("Ricardo de Carvalho")
+                    email.set("rih-carv@gmail.com")
                 }
-                scm {
-                    connection.set("scm:git:git://github.com/rih-carv/LiveCallback.git")
-                    developerConnection.set("scm:git:ssh://github.com/rih-carv/LiveCallback.git")
-                    url.set("https://github.com/rih-carv/LiveCallback/")
-                }
+            }
+            scm {
+                connection.set("scm:git:git://github.com/rih-carv/LiveCallback.git")
+                developerConnection.set("scm:git:ssh://github.com/rih-carv/LiveCallback.git")
+                url.set("https://github.com/rih-carv/LiveCallback/")
             }
         }
     }
-    repositories {
-        maven {
-            val releases = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-            val snapshots = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-            url = if (version.toString().endsWith("SNAPSHOT")) snapshots else releases
-            name = "SonatypeCentral"
+    repositories.maven {
+        val releases = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+        val snapshots = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+        url = if (version.toString().endsWith("SNAPSHOT")) snapshots else releases
+        name = "SonatypeCentral"
 
-            credentials {
-                val sonatypeUsername: String? by project
-                val sonatypePassword: String? by project
-                username = sonatypeUsername
-                password = sonatypePassword
-            }
+        credentials {
+            val sonatypeUsername: String? by project
+            val sonatypePassword: String? by project
+            username = sonatypeUsername
+            password = sonatypePassword
         }
     }
 }
