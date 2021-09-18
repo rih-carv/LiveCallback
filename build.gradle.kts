@@ -17,6 +17,18 @@ allprojects {
     }
 }
 
-val clean by tasks.registering(Delete::class) {
-    delete(rootProject.buildDir)
+plugins {
+    id("com.diffplug.spotless") version "5.14.3"
+}
+
+subprojects {
+    apply(plugin = "com.diffplug.spotless")
+    spotless {
+        kotlin {
+            ktlint()
+        }
+        kotlinGradle {
+            ktlint()
+        }
+    }
 }
