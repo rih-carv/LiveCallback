@@ -1,4 +1,4 @@
-name: Gradle test
+name: Gradle lint and test
 
 on: [push]
 
