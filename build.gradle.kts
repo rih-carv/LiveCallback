@@ -5,7 +5,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:7.0.1")
+        classpath("com.android.tools.build:gradle:7.0.2")
         classpath(embeddedKotlin("gradle-plugin"))
     }
 }
@@ -17,6 +17,18 @@ allprojects {
     }
 }
 
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
+plugins {
+    id("com.diffplug.spotless") version "5.14.3"
+}
+
+subprojects {
+    apply(plugin = "com.diffplug.spotless")
+    spotless {
+        kotlin {
+            ktlint()
+        }
+        kotlinGradle {
+            ktlint()
+        }
+    }
 }

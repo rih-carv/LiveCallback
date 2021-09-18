@@ -9,7 +9,7 @@ import kotlin.properties.Delegates
 class TestLifecycle(initialState: State = State.INITIALIZED) : Lifecycle() {
     private val owner: Owner by lazy { Owner() }
     private val observers = mutableListOf<DefaultLifecycleObserver>()
-    var state : State by Delegates.observable(initialState) { _, old, new ->
+    var state: State by Delegates.observable(initialState) { _, old, new ->
         observers.distinct().forEach {
             if (old < new) Event.upTo(new)?.notify(it)
             else if (old > new) Event.downTo(new)?.notify(it)
