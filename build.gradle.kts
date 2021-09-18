@@ -10,25 +10,29 @@ buildscript {
     }
 }
 
+plugins {
+    id("com.diffplug.spotless") version "5.14.3"
+}
+
 allprojects {
     repositories {
         google()
         mavenCentral()
     }
-}
 
-plugins {
-    id("com.diffplug.spotless") version "5.14.3"
-}
-
-subprojects {
     apply(plugin = "com.diffplug.spotless")
     spotless {
         kotlin {
+            target("**/*.kt")
+            targetExclude("$buildDir/**/*.kt")
             ktlint()
         }
         kotlinGradle {
             ktlint()
         }
+    }
+
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
+        if (System.getenv("CI") == "true") kotlinOptions.allWarningsAsErrors = true
     }
 }
