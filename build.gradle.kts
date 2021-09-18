@@ -25,6 +25,8 @@ subprojects {
     apply(plugin = "com.diffplug.spotless")
     spotless {
         kotlin {
+            target("**/*.kt")
+            targetExclude("$buildDir/**/*.kt")
             ktlint()
         }
         kotlinGradle {
