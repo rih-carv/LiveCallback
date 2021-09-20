@@ -1,6 +1,7 @@
 [![kotlin](https://img.shields.io/badge/Kotlin-grey.svg?logo=kotlin&logoColor=lightgrey)](https://kotlinlang.org)
 [![license](https://img.shields.io/badge/License-The%20MIT%20License-blue.svg)](https://github.com/rih-carv/LiveCallback/blob/main/LICENSE)
 [![version](https://img.shields.io/github/v/release/rih-carv/LiveCallback?label=Latest%20version&logo=gradle&logoColor=lightgrey)](https://github.com/rih-carv/LiveCallback/releases)
+[![codefactor](https://www.codefactor.io/repository/github/rih-carv/livecallback/badge/main)](https://www.codefactor.io/repository/github/rih-carv/livecallback/overview/main)
 [![validations](https://github.com/rih-carv/LiveCallback/actions/workflows/validations.yml/badge.svg?branch=main)](https://github.com/rih-carv/LiveCallback/actions/workflows/validations.yml)
 
 # LiveCallback
