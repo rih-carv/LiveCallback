@@ -12,6 +12,7 @@
     <string name="destroy">Destroy</string>
     <string name="stop">Stop</string>
     <string name="replace">Replace</string>
+    <string name="instance">Fragment instance: 0x%s</string>
     <string-array name="tab_names">
         <item>Lifecycle</item>
         <item>Multiple callbacks</item>

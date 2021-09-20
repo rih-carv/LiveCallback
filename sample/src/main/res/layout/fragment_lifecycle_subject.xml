@@ -6,4 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".SampleActivity">
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/instanceTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/instance"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/resultTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/result"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+        android:textSize="16sp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/triggerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/trigger" />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:constraint_referenced_ids="instanceTextView,resultTextView,triggerButton"
+        app:flow_verticalGap="16dp"
+        app:flow_wrapMode="chain" />
 </androidx.constraintlayout.widget.ConstraintLayout>
