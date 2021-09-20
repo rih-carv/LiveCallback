@@ -1,11 +1,20 @@
 [![kotlin](https://img.shields.io/badge/Kotlin-grey.svg?logo=kotlin&logoColor=lightgrey)](https://kotlinlang.org)
 [![license](https://img.shields.io/badge/License-The%20MIT%20License-blue.svg)](https://github.com/rih-carv/LiveCallback/blob/main/LICENSE)
 [![version](https://img.shields.io/github/v/release/rih-carv/LiveCallback?label=Latest%20version&logo=gradle&logoColor=lightgrey)](https://github.com/rih-carv/LiveCallback/releases)
-[![validations](https://github.com/rih-carv/LiveCallback/actions/workflows/validations.yml/badge.svg)](https://github.com/rih-carv/LiveCallback/actions/workflows/validations.yml)
+[![validations](https://github.com/rih-carv/LiveCallback/actions/workflows/validations.yml/badge.svg?branch=main)](https://github.com/rih-carv/LiveCallback/actions/workflows/validations.yml)
 
 # LiveCallback
 LiveCallback is a library project that aims to make dealing with async callbacks on Android safer
 and straightforward.
+
+## Installation
+Add the following dependency to your `build.gradle` file:
+
+```
+dependencies {
+    implementation 'io.github.rih-carv.livecallback:livecallback:1.0.0'
+}
+```
 
 ## Benefits:
 It provides lifecycle-aware components that:

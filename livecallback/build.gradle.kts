@@ -35,7 +35,7 @@ publishing {
     publications.register<MavenPublication>("library") {
         from(components["java"])
         version = "1.0.0"
-        groupId = "io.github.rih-carv"
+        groupId = "io.github.rih-carv.livecallback"
         artifactId = "livecallback"
         artifact(dokkaJavadocJar)
         artifact(dokkaHtmlJar)
