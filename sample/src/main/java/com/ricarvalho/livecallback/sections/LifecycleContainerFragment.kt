@@ -5,11 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.ricarvalho.livecallback.InputCallbackToken
+import androidx.lifecycle.Lifecycle
+import com.ricarvalho.livecallback.R
 import com.ricarvalho.livecallback.databinding.FragmentLifecycleContainerBinding
+import com.ricarvalho.livecallback.sdk.LegacySdkWrapper
 
 class LifecycleContainerFragment : Fragment() {
-    private val callbackToken: InputCallbackToken<Result<String>>? = null
     private var binding: FragmentLifecycleContainerBinding? = null
 
     override fun onCreateView(
@@ -22,7 +23,6 @@ class LifecycleContainerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        registerCallbacks()
         setupView()
     }
 
@@ -31,7 +31,24 @@ class LifecycleContainerFragment : Fragment() {
         binding = null
     }
 
-    private fun registerCallbacks() {}
-
-    private fun setupView() {}
+    private fun setupView() = binding?.apply {
+        LegacySdkWrapper.progress.observe(viewLifecycleOwner) {
+            progressBar.progress = it
+        }
+        destroyButton.setOnClickListener {
+            childFragmentManager.beginTransaction()
+                .remove(childFragmentManager.fragments.single())
+                .commit()
+        }
+        stopButton.setOnClickListener {
+            childFragmentManager.beginTransaction()
+                .setMaxLifecycle(childFragmentManager.fragments.single(), Lifecycle.State.CREATED)
+                .commit()
+        }
+        replaceButton.setOnClickListener {
+            childFragmentManager.beginTransaction()
+                .replace(R.id.subjectFragmentContainer, LifecycleSubjectFragment())
+                .commit()
+        }
+    }
 }

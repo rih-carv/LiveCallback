@@ -9,6 +9,9 @@
     <string name="error">Error</string>
     <string name="trigger">Trigger</string>
     <string name="clear">Clear</string>
+    <string name="destroy">Destroy</string>
+    <string name="stop">Stop</string>
+    <string name="replace">Replace</string>
     <string-array name="tab_names">
         <item>Lifecycle</item>
         <item>Multiple callbacks</item>
