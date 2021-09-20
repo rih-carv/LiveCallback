@@ -1,7 +1,7 @@
 plugins {
     kotlin("jvm")
     id("java-library")
-    id("org.jetbrains.dokka") version "1.5.0"
+    id("org.jetbrains.dokka")
     id("maven-publish")
     id("signing")
 }
@@ -20,14 +20,14 @@ dependencies {
 }
 
 val dokkaJavadocJar by tasks.register<Jar>("dokkaJavadocJar") {
-    dependsOn(tasks.dokkaJavadoc)
-    from(tasks.dokkaJavadoc.flatMap { it.outputDirectory })
+    dependsOn(tasks.dokkaJavadocPartial)
+    from(tasks.dokkaJavadocPartial.flatMap { it.outputDirectory })
     archiveClassifier.set("javadoc")
 }
 
 val dokkaHtmlJar by tasks.register<Jar>("dokkaHtmlJar") {
-    dependsOn(tasks.dokkaHtml)
-    from(tasks.dokkaHtml.flatMap { it.outputDirectory })
+    dependsOn(tasks.dokkaHtmlPartial)
+    from(tasks.dokkaHtmlPartial.flatMap { it.outputDirectory })
     archiveClassifier.set("html-doc")
 }
 
@@ -35,7 +35,7 @@ publishing {
     publications.register<MavenPublication>("library") {
         from(components["java"])
         version = "1.0.0"
-        groupId = "io.github.rih-carv"
+        groupId = "io.github.rih-carv.livecallback"
         artifactId = "livecallback"
         artifact(dokkaJavadocJar)
         artifact(dokkaHtmlJar)

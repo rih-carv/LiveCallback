@@ -1,10 +1,20 @@
+[![kotlin](https://img.shields.io/badge/Kotlin-grey.svg?logo=kotlin&logoColor=lightgrey)](https://kotlinlang.org)
+[![license](https://img.shields.io/badge/License-The%20MIT%20License-blue.svg)](https://github.com/rih-carv/LiveCallback/blob/main/LICENSE)
+[![version](https://img.shields.io/github/v/release/rih-carv/LiveCallback?label=Latest%20version&logo=gradle&logoColor=lightgrey)](https://github.com/rih-carv/LiveCallback/releases)
+[![validations](https://github.com/rih-carv/LiveCallback/actions/workflows/validations.yml/badge.svg?branch=main)](https://github.com/rih-carv/LiveCallback/actions/workflows/validations.yml)
+
 # LiveCallback
 LiveCallback is a library project that aims to make dealing with async callbacks on Android safer
 and straightforward.
 
-[![kotlin](https://img.shields.io/badge/Kotlin-grey.svg?logo=kotlin&logoColor=lightgrey)](https://kotlinlang.org)
-[![version](https://img.shields.io/github/v/release/rih-carv/LiveCallback?label=Latest%20version&logo=gradle&logoColor=lightgrey)](https://github.com/rih-carv/LiveCallback/releases)
-[![validations](https://github.com/rih-carv/LiveCallback/actions/workflows/validations.yml/badge.svg)](https://github.com/rih-carv/LiveCallback/actions/workflows/validations.yml)
+## Installation
+Add the following dependency to your `build.gradle` file:
+
+```
+dependencies {
+    implementation 'io.github.rih-carv.livecallback:livecallback:1.0.0'
+}
+```
 
 ## Benefits:
 It provides lifecycle-aware components that:
@@ -31,6 +41,8 @@ It provides lifecycle-aware components that:
   are invoked/executed, with the callback execution happening at the same thread it is invoked.
 - By now it doesn't supports signaling for tasks cancellation if there are no more active or
   available callbacks.
+- By now it doesn't supports checking if there're registered callbacks.
+- By now it doesn't supports unregistering callbacks manually.
 
 # Usage
 ## On the provider side
@@ -126,3 +138,24 @@ class FragileFragment : Fragment() {
   - Invocable Registry: `TokenizedSimpleLiveCallbackRegistry`
   - CallbackToken: `SimpleCallbackToken`
   - Callback: `() -> Unit`
+
+# Sample app
+The `sample` module showcases the main benefits of the LiveCallback library:
+- __Lifecycle__ tab: it's possible to trigger a demo long-running operation, then destroy, stop or
+  replace the `Fragment` - whose callbacks are tied to - while the operation is running, and then
+  observe the resulting behavior.
+- __Multiple callbacks__ tab: it's possible to select some previously registered callbacks to be
+  invoked when a demo operation completes, some time after being triggered with the selected
+  callback tokens.
+
+You can install it by running:
+
+```
+./gradlew sample:installDebug
+```
+
+## How to make contributions
+Please read and follow the steps in [CONTRIBUTING.md](/CONTRIBUTING.md)
+
+# License
+[MIT License](/LICENSE)
