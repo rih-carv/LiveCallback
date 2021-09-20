@@ -1,3 +1,20 @@
 <resources>
-    <string name="app_name">LiveCallback</string>
+    <string name="app_name">LiveCallback Sample</string>
+    <string name="checkboxes_title">Select callbacks to be triggered</string>
+    <string name="toast_callback">Callback with result on a Toast</string>
+    <string name="snackbar_callback">Callback with result on a Snackbar</string>
+    <string name="textview_callback">Callback with result in the TextView below</string>
+    <string name="result">Result: %s</string>
+    <string name="success">Success</string>
+    <string name="error">Error</string>
+    <string name="trigger">Trigger</string>
+    <string name="clear">Clear</string>
+    <string name="destroy">Destroy</string>
+    <string name="stop">Stop</string>
+    <string name="replace">Replace</string>
+    <string name="instance">Fragment instance: 0x%s</string>
+    <string-array name="tab_names">
+        <item>Lifecycle</item>
+        <item>Multiple callbacks</item>
+    </string-array>
 </resources>
