@@ -11,7 +11,8 @@ buildscript {
 }
 
 plugins {
-    id("com.diffplug.spotless") version "5.14.3"
+    id("com.diffplug.spotless")
+    id("org.jetbrains.dokka")
 }
 
 allprojects {
