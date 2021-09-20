@@ -11,6 +11,7 @@ import com.ricarvalho.livecallback.InputCallbackToken
 import com.ricarvalho.livecallback.R
 import com.ricarvalho.livecallback.databinding.FragmentMultipleCallbacksBinding
 import com.ricarvalho.livecallback.sdk.LegacySdkWrapper
+import com.ricarvalho.livecallback.sdk.LegacySdkWrapper.representation
 
 class MultipleCallbacksFragment : Fragment() {
     private var toastCallbackToken: InputCallbackToken<Result<String>>? = null
@@ -59,9 +60,6 @@ class MultipleCallbacksFragment : Fragment() {
         viewLifecycleOwner.lifecycle,
         callback = this::updateResultText
     )
-
-    private val Result<String>.representation
-        get() = getOrElse { exceptionOrNull()?.localizedMessage }.orEmpty()
 
     private fun setupView() = binding?.apply {
         updateResultText(null)

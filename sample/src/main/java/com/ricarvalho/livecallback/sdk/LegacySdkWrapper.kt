@@ -19,12 +19,16 @@ object LegacySdkWrapper {
         progress.map { (it * 100).toInt().coerceIn(0..100) }
     }
 
+    val Result<String>.representation
+        get() = getOrElse { exceptionOrNull()?.localizedMessage }.orEmpty()
+
     fun <T : InputCallbackToken<Result<String>>> perform(
         vararg tokens: T,
-        expectedResult: Boolean = togglingResult
+        expectedResult: Boolean = togglingResult,
+        customMessage: String? = null
     ) {
-        progressLiveData.value = legacySdk.performOperation(expectedResult) { result ->
-            for (token in tokens) callbacks(token, result)
+        progressLiveData.value = legacySdk.performOperation(expectedResult, customMessage) {
+            for (token in tokens) callbacks(token, it)
         }
         togglingResult = !expectedResult
     }
