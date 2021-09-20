@@ -16,6 +16,9 @@ dependencies {
 }
 ```
 
+## Documentation
+[LiveCallback docs](https://rih-carv.github.io/LiveCallback)
+
 ## Benefits:
 It provides lifecycle-aware components that:
 - **Prevents memory leaks**: by releasing the callbacks when lifecycle owners are destroyed.
@@ -154,7 +157,7 @@ You can install it by running:
 ./gradlew sample:installDebug
 ```
 
-## How to make contributions
+# How to make contributions
 Please read and follow the steps in [CONTRIBUTING.md](/CONTRIBUTING.md)
 
 # License
