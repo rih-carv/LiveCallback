@@ -1,0 +1,6 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+
+module:livecallback
+com.ricarvalho.livecallback
+com.ricarvalho.livecallback.registry
