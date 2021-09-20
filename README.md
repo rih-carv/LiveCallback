@@ -41,6 +41,8 @@ It provides lifecycle-aware components that:
   are invoked/executed, with the callback execution happening at the same thread it is invoked.
 - By now it doesn't supports signaling for tasks cancellation if there are no more active or
   available callbacks.
+- By now it doesn't supports checking if there're registered callbacks.
+- By now it doesn't supports unregistering callbacks manually.
 
 # Usage
 ## On the provider side
@@ -137,5 +139,23 @@ class FragileFragment : Fragment() {
   - CallbackToken: `SimpleCallbackToken`
   - Callback: `() -> Unit`
 
+# Sample app
+The `sample` module showcases the main benefits of the LiveCallback library:
+- __Lifecycle__ tab: it's possible to trigger a demo long-running operation, then destroy, stop or
+  replace the `Fragment` - whose callbacks are tied to - while the operation is running, and then
+  observe the resulting behavior.
+- __Multiple callbacks__ tab: it's possible to select some previously registered callbacks to be
+  invoked when a demo operation completes, some time after being triggered with the selected
+  callback tokens.
+
+You can install it by running:
+
+```
+./gradlew sample:installDebug
+```
+
+## How to make contributions
+Please read and follow the steps in [CONTRIBUTING.md](/CONTRIBUTING.md)
+
 # License
-[MIT License](https://github.com/rih-carv/LiveCallback/blob/main/LICENSE)
+[MIT License](/LICENSE)
