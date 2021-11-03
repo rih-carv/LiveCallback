@@ -56,7 +56,7 @@ publishing {
                 developer {
                     id.set("rih-carv")
                     name.set("Ricardo de Carvalho")
-                    email.set("rih-carv@gmail.com")
+                    email.set("rih.carv@gmail.com")
                 }
             }
             scm {
