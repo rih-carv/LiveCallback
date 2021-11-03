@@ -1,4 +1,4 @@
-name: Create release from version tag and upload sample APK
+name: Create draft release from version tag and upload sample APK
 
 on:
   push:
@@ -22,7 +22,8 @@ jobs:
       - name: Assemble with Gradle
         run: gradle sample:assembleDebug
 
-      - name: Create release
+      - name: Create draft release
         uses: softprops/action-gh-release@v1
         with:
           files: ./sample/build/outputs/apk/debug/sample-debug.apk
+          draft: true
