@@ -16,7 +16,7 @@ I will reply as soon as possible.
 I will do my best to address the issue, and you can expect it to be shipped on the next released
 versions, as soon as it's been fixed.
 
-## Disclosure
+### Disclosure
 
 To protect our community, I ask that you wait until a fix is made available and communicated to
 those affected, or a reasonable period of time has elapsed since notification, before publicly
