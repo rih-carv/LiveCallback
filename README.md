@@ -9,9 +9,19 @@ LiveCallback is a library project that aims to make dealing with async callbacks
 and straightforward.
 
 ## Installation
-Add the following dependency to your `build.gradle` file:
+Add the following to your `build.gradle` files:
 
+### Project level
+```groovy
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+}
 ```
+
+### App level
+```groovy
 dependencies {
     implementation 'io.github.rih-carv.livecallback:livecallback:1.0.0'
 }
@@ -152,14 +162,22 @@ The `sample` module showcases the main benefits of the LiveCallback library:
   invoked when a demo operation completes, some time after being triggered with the selected
   callback tokens.
 
-You can install it by running:
+You can install it by downloading the provided APK files in the
+[releases](https://github.com/rih-carv/LiveCallback/releases), or by running:
 
-```
+```shell
 ./gradlew sample:installDebug
 ```
 
+# Releases
+The release history can be found at [CHANGELOG.md](/CHANGELOG.md) and at the
+[releases](https://github.com/rih-carv/LiveCallback/releases).
+
+Currently supported versions with security updates can be found at [SECURITY.md](/SECURITY.md).
+
 # How to make contributions
-Please read and follow the steps in [CONTRIBUTING.md](/CONTRIBUTING.md)
+Please read our [CODE_OF_CONDUCT.md](/CODE_OF_CONDUCT.md) and follow the steps in
+[CONTRIBUTING.md](/CONTRIBUTING.md).
 
 # License
 [MIT License](/LICENSE)
