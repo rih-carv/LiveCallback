@@ -4,14 +4,14 @@ plugins {
 }
 
 android {
-    compileSdk = 30
+    compileSdk = 31
 
     defaultConfig {
         val liveCallbackVersion: String by rootProject.extra
 
         applicationId = "com.ricarvalho.livecallback"
         minSdk = 21
-        targetSdk = 30
+        targetSdk = 31
         versionCode = 1
         versionName = liveCallbackVersion
 

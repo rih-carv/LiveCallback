@@ -25,6 +25,9 @@ dependencies {
 
 tasks.jacocoTestReport {
     dependsOn(tasks.test)
+    reports {
+        xml.required.set(true)
+    }
 }
 
 val dokkaJavadocJar by tasks.register<Jar>("dokkaJavadocJar") {
