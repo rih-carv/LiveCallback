@@ -4,6 +4,7 @@ plugins {
     id("org.jetbrains.dokka")
     id("maven-publish")
     id("signing")
+    jacoco
 }
 
 java {
@@ -13,10 +14,17 @@ java {
 }
 
 dependencies {
-    implementation(embeddedKotlin("stdlib"))
-    implementation("androidx.lifecycle:lifecycle-common-java8:2.3.1")
+    val lifecycleVersion: String by rootProject.extra
+    val junitVersion: String by rootProject.extra
 
-    testImplementation("junit:junit:4.13.2")
+    implementation(embeddedKotlin("stdlib"))
+    implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion")
+
+    testImplementation("junit:junit:$junitVersion")
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
 }
 
 val dokkaJavadocJar by tasks.register<Jar>("dokkaJavadocJar") {
@@ -32,9 +40,11 @@ val dokkaHtmlJar by tasks.register<Jar>("dokkaHtmlJar") {
 }
 
 publishing {
+    val liveCallbackVersion: String by rootProject.extra
+
     publications.register<MavenPublication>("library") {
         from(components["java"])
-        version = "1.0.0"
+        version = liveCallbackVersion
         groupId = "io.github.rih-carv.livecallback"
         artifactId = "livecallback"
         artifact(dokkaJavadocJar)
@@ -68,8 +78,8 @@ publishing {
     }
     repositories.maven {
         val releases = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-        val snapshots = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-        url = if (version.toString().endsWith("SNAPSHOT")) snapshots else releases
+        val snapshots = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+        url = if (liveCallbackVersion.endsWith("SNAPSHOT")) snapshots else releases
         name = "SonatypeCentral"
 
         credentials {
