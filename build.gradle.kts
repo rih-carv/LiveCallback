@@ -47,6 +47,26 @@ val dokkaHtmlMultiModule by tasks.existing(DokkaMultiModuleTask::class) {
     }
 }
 
+val dokkaHtmlMultiModuleVersioning by tasks.registering {
+    dependsOn(dokkaHtmlMultiModule)
+    doLast {
+        val olderDokkaVersionsDir: String? by project
+        val docsOutputDir: String by project
+        val outputDir = dokkaHtmlMultiModule.map(DokkaMultiModuleTask::outputDirectory)
+        val createdVersionDir = "$olderDokkaVersionsDir/$liveCallbackVersion"
+
+        copy {
+            from(outputDir)
+            into(docsOutputDir)
+        }
+        copy {
+            from(docsOutputDir)
+            into(createdVersionDir)
+            exclude("older/")
+        }
+    }
+}
+
 val liveCallbackVersion by extra("1.0.0")
 val lifecycleVersion by extra("2.4.0")
 val junitVersion by extra("4.13.2")

@@ -42,13 +42,17 @@ jobs:
           distribution: 'adopt'
           cache: 'gradle'
 
+      - name: Checkout older versions
+        run: git worktree add ./gh-action-publish-deploy-docs gh-pages
+
       - name: Dokka Html
-        run: gradle dokkaHtmlMultiModule
+        run: gradle dokkaHtmlMultiModuleVersioning
         env:
           ORG_GRADLE_PROJECT_olderDokkaVersionsDir: gh-action-publish-deploy-docs/versions
+          ORG_GRADLE_PROJECT_docsOutputDir: gh-action-publish-deploy-docs/docs
 
       - name: Deploy docs to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build/dokka/htmlMultiModule
+          publish_dir: ./gh-action-publish-deploy-docs
