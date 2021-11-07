@@ -2,6 +2,8 @@
 [![license](https://img.shields.io/badge/License-The%20MIT%20License-blue.svg)](https://github.com/rih-carv/LiveCallback/blob/main/LICENSE)
 [![version](https://img.shields.io/github/v/release/rih-carv/LiveCallback?label=Latest%20version&logo=gradle&logoColor=lightgrey)](https://github.com/rih-carv/LiveCallback/releases)
 [![codefactor](https://www.codefactor.io/repository/github/rih-carv/livecallback/badge/main)](https://www.codefactor.io/repository/github/rih-carv/livecallback/overview/main)
+[![maintainability](https://api.codeclimate.com/v1/badges/d2d8e3b7bb061cccf3d8/maintainability)](https://codeclimate.com/github/rih-carv/LiveCallback/maintainability)
+[![test coverage](https://api.codeclimate.com/v1/badges/d2d8e3b7bb061cccf3d8/test_coverage)](https://codeclimate.com/github/rih-carv/LiveCallback/test_coverage)
 [![validations](https://github.com/rih-carv/LiveCallback/actions/workflows/validations.yml/badge.svg?branch=main)](https://github.com/rih-carv/LiveCallback/actions/workflows/validations.yml)
 
 # LiveCallback
