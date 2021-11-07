@@ -13,10 +13,13 @@ java {
 }
 
 dependencies {
-    implementation(embeddedKotlin("stdlib"))
-    implementation("androidx.lifecycle:lifecycle-common-java8:2.3.1")
+    val lifecycleVersion: String by rootProject.extra
+    val junitVersion: String by rootProject.extra
 
-    testImplementation("junit:junit:4.13.2")
+    implementation(embeddedKotlin("stdlib"))
+    implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion")
+
+    testImplementation("junit:junit:$junitVersion")
 }
 
 val dokkaJavadocJar by tasks.register<Jar>("dokkaJavadocJar") {
@@ -32,9 +35,11 @@ val dokkaHtmlJar by tasks.register<Jar>("dokkaHtmlJar") {
 }
 
 publishing {
+    val liveCallbackVersion: String by rootProject.extra
+
     publications.register<MavenPublication>("library") {
         from(components["java"])
-        version = "1.0.0"
+        version = liveCallbackVersion
         groupId = "io.github.rih-carv.livecallback"
         artifactId = "livecallback"
         artifact(dokkaJavadocJar)

@@ -32,3 +32,7 @@ allprojects {
         if (System.getenv("CI") == "true") kotlinOptions.allWarningsAsErrors = true
     }
 }
+
+val liveCallbackVersion by extra("1.0.0")
+val lifecycleVersion by extra("2.4.0")
+val junitVersion by extra("4.13.2")
