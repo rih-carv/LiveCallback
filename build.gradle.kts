@@ -1,3 +1,7 @@
+import org.jetbrains.dokka.gradle.DokkaMultiModuleTask
+import org.jetbrains.dokka.versioning.VersioningConfiguration
+import org.jetbrains.dokka.versioning.VersioningPlugin
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     repositories {
@@ -5,8 +9,9 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:7.0.2")
+        classpath("com.android.tools.build:gradle:7.0.3")
         classpath(embeddedKotlin("gradle-plugin"))
+        classpath("org.jetbrains.dokka:versioning-plugin:1.5.31")
     }
 }
 
@@ -16,11 +21,6 @@ plugins {
 }
 
 allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-
     apply(plugin = "com.diffplug.spotless")
     spotless {
         kotlin {
@@ -37,3 +37,36 @@ allprojects {
         if (System.getenv("CI") == "true") kotlinOptions.allWarningsAsErrors = true
     }
 }
+
+val dokkaHtmlMultiModule by tasks.existing(DokkaMultiModuleTask::class) {
+    failOnWarning.set(true)
+    pluginConfiguration<VersioningPlugin, VersioningConfiguration> {
+        val olderDokkaVersionsDir: String? by project
+        version = liveCallbackVersion
+        olderVersionsDir = olderDokkaVersionsDir?.let { projectDir.resolve(it) }
+    }
+}
+
+val dokkaHtmlMultiModuleVersioning by tasks.registering {
+    dependsOn(dokkaHtmlMultiModule)
+    doLast {
+        val olderDokkaVersionsDir: String? by project
+        val docsOutputDir: String by project
+        val outputDir = dokkaHtmlMultiModule.map(DokkaMultiModuleTask::outputDirectory)
+        val createdVersionDir = "$olderDokkaVersionsDir/$liveCallbackVersion"
+
+        copy {
+            from(outputDir)
+            into(docsOutputDir)
+        }
+        copy {
+            from(docsOutputDir)
+            into(createdVersionDir)
+            exclude("older/")
+        }
+    }
+}
+
+val liveCallbackVersion by extra("1.0.0")
+val lifecycleVersion by extra("2.4.0")
+val junitVersion by extra("4.13.2")
