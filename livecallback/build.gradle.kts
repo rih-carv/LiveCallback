@@ -73,8 +73,8 @@ publishing {
     }
     repositories.maven {
         val releases = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-        val snapshots = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-        url = if (version.toString().endsWith("SNAPSHOT")) snapshots else releases
+        val snapshots = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+        url = if (liveCallbackVersion.endsWith("SNAPSHOT")) snapshots else releases
         name = "SonatypeCentral"
 
         credentials {
