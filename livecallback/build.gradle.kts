@@ -4,6 +4,7 @@ plugins {
     id("org.jetbrains.dokka")
     id("maven-publish")
     id("signing")
+    jacoco
 }
 
 java {
@@ -20,6 +21,10 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion")
 
     testImplementation("junit:junit:$junitVersion")
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
 }
 
 val dokkaJavadocJar by tasks.register<Jar>("dokkaJavadocJar") {

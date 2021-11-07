@@ -1,6 +1,7 @@
 import org.jetbrains.dokka.gradle.DokkaMultiModuleTask
 import org.jetbrains.dokka.versioning.VersioningConfiguration
 import org.jetbrains.dokka.versioning.VersioningPlugin
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
@@ -33,7 +34,7 @@ allprojects {
         }
     }
 
-    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
+    tasks.withType(KotlinCompile::class).all {
         if (System.getenv("CI") == "true") kotlinOptions.allWarningsAsErrors = true
     }
 }

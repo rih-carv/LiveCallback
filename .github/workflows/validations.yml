@@ -1,11 +1,11 @@
-name: Lint and test
+name: Lint, test and coverage
 
 on: [push]
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
 
     steps:
       - uses: actions/checkout@v2
@@ -21,3 +21,10 @@ jobs:
 
       - name: Test with Gradle
         run: gradle test
+
+      - name: Report Jacoco coverage to CodeClimate
+        uses: paambaati/codeclimate-action@v2.2.4
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_TEST_REPORTER_ID }}
+        with:
+          coverageCommand: gradle jacocoTestReport
