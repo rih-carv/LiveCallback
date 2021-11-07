@@ -16,11 +16,6 @@ plugins {
 }
 
 allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-
     apply(plugin = "com.diffplug.spotless")
     spotless {
         kotlin {

@@ -1,5 +1,13 @@
 rootProject.name = "LiveCallback"
 
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
 pluginManagement {
     plugins {
         kotlin("jvm") version "1.5.30"
