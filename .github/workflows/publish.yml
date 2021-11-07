@@ -44,6 +44,8 @@ jobs:
 
       - name: Dokka Html
         run: gradle dokkaHtmlMultiModule
+        env:
+          ORG_GRADLE_PROJECT_olderDokkaVersionsDir: gh-action-publish-deploy-docs/versions
 
       - name: Deploy docs to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3

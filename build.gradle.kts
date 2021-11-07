@@ -1,3 +1,7 @@
+import org.jetbrains.dokka.gradle.DokkaMultiModuleTask
+import org.jetbrains.dokka.versioning.VersioningConfiguration
+import org.jetbrains.dokka.versioning.VersioningPlugin
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     repositories {
@@ -7,6 +11,7 @@ buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle:7.0.3")
         classpath(embeddedKotlin("gradle-plugin"))
+        classpath("org.jetbrains.dokka:versioning-plugin:1.5.31")
     }
 }
 
@@ -30,6 +35,15 @@ allprojects {
 
     tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
         if (System.getenv("CI") == "true") kotlinOptions.allWarningsAsErrors = true
+    }
+}
+
+val dokkaHtmlMultiModule by tasks.existing(DokkaMultiModuleTask::class) {
+    failOnWarning.set(true)
+    pluginConfiguration<VersioningPlugin, VersioningConfiguration> {
+        val olderDokkaVersionsDir: String? by project
+        version = liveCallbackVersion
+        olderVersionsDir = olderDokkaVersionsDir?.let { projectDir.resolve(it) }
     }
 }
 
