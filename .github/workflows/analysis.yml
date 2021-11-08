@@ -1,4 +1,4 @@
-name: Scan with Detekt
+name: Scan with Detekt and Snyk
 
 on:
   push:
@@ -26,3 +26,21 @@ jobs:
         if: success() || failure()
         with:
           sarif_file: detekt.sarif.json
+
+  security:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@master
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/gradle@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_AUTH_TOKEN }}
+        with:
+          args: --sarif-file-output=snyk.sarif --all-sub-projects
+
+      - name: Upload result to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v1
+        if: success() || failure()
+        with:
+          sarif_file: snyk.sarif
