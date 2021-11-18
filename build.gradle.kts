@@ -34,7 +34,7 @@ allprojects {
         }
     }
 
-    tasks.withType(KotlinCompile::class).all {
+    tasks.withType(KotlinCompile::class).configureEach {
         if (System.getenv("CI") == "true") kotlinOptions.allWarningsAsErrors = true
     }
 }
