@@ -11,7 +11,7 @@ dependencyResolutionManagement {
 pluginManagement {
     plugins {
         kotlin("jvm") version "1.5.31"
-        id("com.diffplug.spotless") version "6.6.1"
+        id("com.diffplug.spotless") version "6.8.0"
         id("org.jetbrains.dokka") version "1.5.31"
     }
 }
