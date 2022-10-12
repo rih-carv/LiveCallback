@@ -12,7 +12,7 @@ buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle:7.0.3")
         classpath(embeddedKotlin("gradle-plugin"))
-        classpath("org.jetbrains.dokka:versioning-plugin:1.5.31")
+        classpath("org.jetbrains.dokka:versioning-plugin:1.7.20")
     }
 }
 
