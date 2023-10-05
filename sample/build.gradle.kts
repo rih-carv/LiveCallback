@@ -33,6 +33,7 @@ android {
 
     kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8.toString()
     viewBinding.isEnabled = true
+    namespace = "com.ricarvalho.livecallback"
 }
 
 dependencies {
