@@ -9,18 +9,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Set up JDK 11
+      - name: Set JDK version
         uses: actions/setup-java@v3
         with:
-          java-version: '11'
-          distribution: 'adopt'
+          java-version: '17'
+          distribution: 'oracle'
           cache: 'gradle'
 
       - name: Lint with Ktlint
-        run: gradle spotlessCheck
+        run: ./gradlew spotlessCheck
 
       - name: Test with Gradle
-        run: gradle test
+        run: ./gradlew test
 
       - name: Report Jacoco coverage to CodeClimate
         uses: paambaati/codeclimate-action@v3.0.0
@@ -28,5 +28,5 @@ jobs:
           CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_TEST_REPORTER_ID }}
           JACOCO_SOURCE_PATH: "${{github.workspace}}/livecallback/src/main/java"
         with:
-          coverageCommand: gradle jacocoTestReport
+          coverageCommand: ./gradlew jacocoTestReport
           coverageLocations: ${{ github.workspace }}/livecallback/build/reports/jacoco/test/jacocoTestReport.xml:jacoco

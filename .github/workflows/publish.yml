@@ -11,18 +11,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Set up JDK 11
+      - name: Set JDK version
         uses: actions/setup-java@v3
         with:
-          java-version: '11'
-          distribution: 'adopt'
+          java-version: '17'
+          distribution: 'oracle'
           cache: 'gradle'
 
       - name: Build with Gradle
-        run: gradle build
+        run: ./gradlew build
 
       - name: Publish to Sonatype Central
-        run: gradle publishLibraryPublicationToSonatypeCentralRepository
+        run: ./gradlew publishLibraryPublicationToSonatypeCentralRepository
         env:
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGKEY }}
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGPASSWORD }}
@@ -35,18 +35,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Set up JDK 11
+      - name: Set JDK version
         uses: actions/setup-java@v3
         with:
-          java-version: '11'
-          distribution: 'adopt'
+          java-version: '17'
+          distribution: 'oracle'
           cache: 'gradle'
 
       - name: Checkout older versions
         run: git worktree add ./gh-action-publish-deploy-docs gh-pages
 
       - name: Dokka Html
-        run: gradle dokkaHtmlMultiModuleVersioning
+        run: ./gradlew dokkaHtmlMultiModuleVersioning
         env:
           ORG_GRADLE_PROJECT_olderDokkaVersionsDir: gh-action-publish-deploy-docs/versions
           ORG_GRADLE_PROJECT_docsOutputDir: gh-action-publish-deploy-docs/docs
