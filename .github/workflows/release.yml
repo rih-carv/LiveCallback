@@ -20,7 +20,7 @@ jobs:
           cache: 'gradle'
 
       - name: Assemble with Gradle
-        run: gradle sample:assembleDebug
+        run: ./gradlew sample:assembleDebug
 
       - name: Create draft release
         uses: softprops/action-gh-release@v1

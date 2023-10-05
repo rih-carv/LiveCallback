@@ -19,10 +19,10 @@ jobs:
           cache: 'gradle'
 
       - name: Build with Gradle
-        run: gradle build
+        run: ./gradlew build
 
       - name: Publish to Sonatype Central
-        run: gradle publishLibraryPublicationToSonatypeCentralRepository
+        run: ./gradlew publishLibraryPublicationToSonatypeCentralRepository
         env:
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGKEY }}
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGPASSWORD }}
@@ -46,7 +46,7 @@ jobs:
         run: git worktree add ./gh-action-publish-deploy-docs gh-pages
 
       - name: Dokka Html
-        run: gradle dokkaHtmlMultiModuleVersioning
+        run: ./gradlew dokkaHtmlMultiModuleVersioning
         env:
           ORG_GRADLE_PROJECT_olderDokkaVersionsDir: gh-action-publish-deploy-docs/versions
           ORG_GRADLE_PROJECT_docsOutputDir: gh-action-publish-deploy-docs/docs
